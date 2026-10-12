@@ -4,37 +4,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CollabBoard - Outil de Rétrospective Agile</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="board.css">
     <script src="board.js" defer></script>
 </head>
 <body>
-    <header>
-        <h1>CollabBoard</h1>
-        <p>Outil interactif de rétrospective Agile pour les équipes.</p>
+    <header class="page-header">
+        <div class="page-shell">
+            <a class="back-link" href="../../../index.html">← Retour au Portfolio Principal</a>
+            <p class="eyebrow">Démo interactive · Sprint retrospective</p>
+            <h1>CollabBoard</h1>
+            <p>Outil interactif de rétrospective Agile pour les équipes.</p>
+        </div>
     </header>
     <main>
-        <section id="board">
-            <h2>Tableau de Rétrospective</h2>
+        <section id="board" class="page-shell">
+            <div class="section-heading">
+                <div><p class="eyebrow">Cycle actuel</p><h2>Tableau de rétrospective</h2></div>
+                <p class="board-intro">Déplacez les idées et répartissez vos cinq votes.</p>
+            </div>
             <div class="column" id="start-column" data-type="start">
-                <h3>Start</h3>
+                <h3><span class="column-mark start-mark"></span>Start</h3>
                 <div class="card-container" data-type="start"></div>
-                <button onclick="addCard('start')">Ajouter une carte</button>
+                <button class="add-card" type="button" data-add-card="start">＋ Ajouter une carte</button>
             </div>
             <div class="column" id="stop-column" data-type="stop">
-                <h3>Stop</h3>
+                <h3><span class="column-mark stop-mark"></span>Stop</h3>
                 <div class="card-container" data-type="stop"></div>
-                <button onclick="addCard('stop')">Ajouter une carte</button>
+                <button class="add-card" type="button" data-add-card="stop">＋ Ajouter une carte</button>
             </div>
             <div class="column" id="continue-column" data-type="continue">
-                <h3>Continue</h3>
+                <h3><span class="column-mark continue-mark"></span>Continue</h3>
                 <div class="card-container" data-type="continue"></div>
-                <button onclick="addCard('continue')">Ajouter une carte</button>
+                <button class="add-card" type="button" data-add-card="continue">＋ Ajouter une carte</button>
             </div>
         </section>
-        <button id="export-button" class="export-button" type="button">Télécharger le rapport Markdown</button>
-        <p id="vote-status" role="status">Votes utilisés : 0/5</p>
+        <div class="page-shell board-actions">
+            <p id="vote-status" class="status-line" role="status">Votes utilisés : 0/5</p>
+            <button id="export-button" class="button button-primary" type="button">↓ Télécharger le rapport Markdown</button>
+        </div>
     </main>
-    <footer>
+    <footer class="site-footer">
         <p>&copy; 2023 M'Fabdel-Aziz (Abdel-Aziz) DIANÉ</p>
     </footer>
 </body>

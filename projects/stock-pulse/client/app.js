@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', async () => {
+document.addEventListener('DOMContentLoaded', () => {
     const inventory = [
         { name: 'Ordinateurs portables', quantity: 24 },
         { name: 'Écrans 24 pouces', quantity: 38 },
@@ -27,31 +27,25 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     function initializeChart() {
         if (!window.Chart) {
-            status.textContent = 'Graphique indisponible : vérifiez la connexion pour charger Chart.js.';
+            status.textContent = 'Graphique indisponible : Chart.js ne s’est pas chargé. Vérifiez votre connexion puis rechargez la page.';
             return;
         }
         chart = new Chart(document.getElementById('stockChart'), {
             type: 'bar',
             data: {
                 labels: inventory.map(product => product.name),
-                datasets: [{ label: 'Unités en stock', data: inventory.map(product => product.quantity), backgroundColor: ['#e56b4e', '#42a5a0', '#e3b341', '#5f83c7'] }]
+                datasets: [{ label: 'Unités en stock', data: inventory.map(product => product.quantity), backgroundColor: ['#3b82f6', '#06b6d4', '#10b981', '#f59e0b'], borderRadius: 4 }]
             },
-            options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true } } }
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { labels: { color: '#d9e4f2' } } },
+                scales: {
+                    x: { ticks: { color: '#9aa8bb' }, grid: { color: 'rgba(154,168,187,.12)' } },
+                    y: { beginAtZero: true, ticks: { color: '#9aa8bb' }, grid: { color: 'rgba(154,168,187,.12)' } }
+                }
+            }
         });
-    }
-
-    async function loadApiData() {
-        try {
-            const response = await fetch('../api/index.php/inventory', { headers: { Accept: 'application/json' } });
-            if (!response.ok) throw new Error('API non disponible');
-            const result = await response.json();
-            if (!Array.isArray(result) || !result.length) throw new Error('Réponse API invalide');
-            inventory.splice(0, inventory.length, ...result.map(item => ({ name: item.name, quantity: Number(item.quantity) || 0 })));
-            status.textContent = 'Inventaire chargé depuis l’API locale.';
-        } catch {
-            status.textContent = 'Mode démonstration : données locales utilisées (API PHP non disponible).';
-        }
-        renderInventory();
     }
 
     function moveStock(direction) {
@@ -74,5 +68,5 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('stock-out').addEventListener('click', () => moveStock(-1));
     renderInventory();
     initializeChart();
-    await loadApiData();
+    status.textContent = 'Mode démo : données locales, aucun serveur PHP requis.';
 });
