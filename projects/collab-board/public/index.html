@@ -3,10 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CollabBoard - Outil de Rétrospective Agile</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <meta name="description" content="Démo locale d'un tableau de rétrospective Agile Start, Stop, Continue.">
+    <title>CollabBoard — Rétrospective d’équipe</title>
     <link rel="stylesheet" href="board.css">
     <script src="board.js" defer></script>
 </head>
@@ -16,38 +14,57 @@
             <a class="back-link" href="../../../index.html">← Retour au Portfolio Principal</a>
             <p class="eyebrow">Démo interactive · Sprint retrospective</p>
             <h1>CollabBoard</h1>
-            <p>Outil interactif de rétrospective Agile pour les équipes.</p>
+            <p>Organisez les idées d'une rétrospective Start / Stop / Continue.</p>
         </div>
     </header>
     <main>
         <section id="board" class="page-shell">
             <div class="section-heading">
                 <div><p class="eyebrow">Cycle actuel</p><h2>Tableau de rétrospective</h2></div>
-                <p class="board-intro">Déplacez les idées et répartissez vos cinq votes.</p>
+                <p class="board-intro">Déplacez les idées et répartissez vos cinq votes. Les données restent dans ce navigateur.</p>
             </div>
             <div class="column" id="start-column" data-type="start">
                 <h3><span class="column-mark start-mark"></span>Start</h3>
                 <div class="card-container" data-type="start"></div>
-                <button class="add-card" type="button" data-add-card="start">＋ Ajouter une carte</button>
+                <button class="add-card" type="button" data-add-card="start" aria-expanded="false" aria-controls="add-form-start">＋ Ajouter une carte</button>
+                <form class="add-card-form" id="add-form-start" data-card-form="start" hidden>
+                    <label for="title-start">Idée</label><input id="title-start" name="title" maxlength="100" required>
+                    <label for="description-start">Détail <span>(facultatif)</span></label><textarea id="description-start" name="description" maxlength="500" rows="3"></textarea>
+                    <button class="button button-primary" type="submit">Ajouter l’idée</button>
+                </form>
             </div>
             <div class="column" id="stop-column" data-type="stop">
                 <h3><span class="column-mark stop-mark"></span>Stop</h3>
                 <div class="card-container" data-type="stop"></div>
-                <button class="add-card" type="button" data-add-card="stop">＋ Ajouter une carte</button>
+                <button class="add-card" type="button" data-add-card="stop" aria-expanded="false" aria-controls="add-form-stop">＋ Ajouter une carte</button>
+                <form class="add-card-form" id="add-form-stop" data-card-form="stop" hidden>
+                    <label for="title-stop">Idée</label><input id="title-stop" name="title" maxlength="100" required>
+                    <label for="description-stop">Détail <span>(facultatif)</span></label><textarea id="description-stop" name="description" maxlength="500" rows="3"></textarea>
+                    <button class="button button-primary" type="submit">Ajouter l’idée</button>
+                </form>
             </div>
             <div class="column" id="continue-column" data-type="continue">
                 <h3><span class="column-mark continue-mark"></span>Continue</h3>
                 <div class="card-container" data-type="continue"></div>
-                <button class="add-card" type="button" data-add-card="continue">＋ Ajouter une carte</button>
+                <button class="add-card" type="button" data-add-card="continue" aria-expanded="false" aria-controls="add-form-continue">＋ Ajouter une carte</button>
+                <form class="add-card-form" id="add-form-continue" data-card-form="continue" hidden>
+                    <label for="title-continue">Idée</label><input id="title-continue" name="title" maxlength="100" required>
+                    <label for="description-continue">Détail <span>(facultatif)</span></label><textarea id="description-continue" name="description" maxlength="500" rows="3"></textarea>
+                    <button class="button button-primary" type="submit">Ajouter l’idée</button>
+                </form>
             </div>
         </section>
         <div class="page-shell board-actions">
-            <p id="vote-status" class="status-line" role="status">Votes utilisés : 0/5</p>
-            <button id="export-button" class="button button-primary" type="button">↓ Télécharger le rapport Markdown</button>
+            <p id="vote-status" class="status-line" role="status" aria-live="polite">Votes utilisés : 0/5</p>
+            <div class="action-group">
+                <button id="reset-board" class="button button-secondary" type="button">Réinitialiser le tableau</button>
+                <button id="export-button" class="button button-primary" type="button">↓ Télécharger le rapport Markdown</button>
+            </div>
         </div>
+        <p id="board-status" class="page-shell storage-status" role="status" aria-live="polite"></p>
     </main>
     <footer class="site-footer">
-        <p>&copy; 2023 M'Fabdel-Aziz (Abdel-Aziz) DIANÉ</p>
+        <p>&copy; <span id="current-year">2026</span> M'Fabdel-Aziz DIANÉ</p>
     </footer>
 </body>
 </html>

@@ -26,32 +26,66 @@ class TicketController {
 
     public function create() {
         $this->requireUser();
-        if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !$this->validCsrf() || !$this->validateTicketData($_POST)) {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            header('Allow: POST');
+            http_response_code(405);
+            echo 'Méthode non autorisée.';
+            return;
+        }
+        if (!$this->validCsrf()) {
+            http_response_code(403);
+            echo 'Le formulaire a expiré. Actualisez la page puis réessayez.';
+            return;
+        }
+        if (!$this->validateTicketData($_POST)) {
             http_response_code(422);
+            echo 'Vérifiez que le sujet et la description sont renseignés et respectent les longueurs autorisées.';
             return;
         }
         $this->ticketModel->create($_POST, (int) $_SESSION['user']['id']);
-        header('Location: /tickets');
+        header('Location: ?route=dashboard');
         exit;
     }
 
     public function update($id) {
         $this->requireUser();
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            header('Allow: POST');
+            http_response_code(405);
+            echo 'Méthode non autorisée.';
+            return;
+        }
         $role = $_SESSION['user']['role'];
         $status = (string) ($_POST['status'] ?? '');
-        if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !$this->validCsrf() || !in_array($role, ['Technicien', 'Admin'], true) || !in_array($status, ['open', 'in_progress', 'closed'], true)) {
+        if (!$this->validCsrf()) {
             http_response_code(403);
+            echo 'Le formulaire a expiré. Actualisez la page puis réessayez.';
+            return;
+        }
+        if (!in_array($role, ['Technicien', 'Admin'], true)) {
+            http_response_code(403);
+            echo 'Vous n’avez pas les droits nécessaires pour modifier ce ticket.';
+            return;
+        }
+        if (!in_array($status, ['open', 'in_progress', 'closed'], true)) {
+            http_response_code(422);
+            echo 'Le statut sélectionné est invalide.';
             return;
         }
         $ticket = $this->ticketModel->getById((int) $id);
-        if ($ticket) $this->ticketModel->update((int) $id, ['title' => $ticket['title'], 'description' => $ticket['description'], 'status' => $status]);
-        header('Location: /tickets');
+        if (!$ticket) {
+            http_response_code(404);
+            echo 'Ticket introuvable.';
+            return;
+        }
+        $this->ticketModel->update((int) $id, ['title' => $ticket['title'], 'description' => $ticket['description'], 'status' => $status]);
+        header('Location: ?route=dashboard');
         exit;
     }
 
     private function requireUser() {
         if (empty($_SESSION['user']['id'])) {
-            header('Location: /login');
+            header('Location: ?route=login');
             exit;
         }
     }

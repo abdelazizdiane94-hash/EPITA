@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Présentation de StockPulse, une démo d'inventaire en JavaScript et un prototype d'API PHP.">
+    <title>StockPulse — Présentation du projet</title>
+    <link rel="icon" href="../../epita_logo.png">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+</head>
+<body>
+    <a class="skip-link" href="#project-content">Aller au contenu</a>
+    <nav class="site-nav" aria-label="Navigation principale">
+        <a href="../../index.html" class="brand"><img src="../../epita_logo.png" alt=""><span>Portfolio<span class="brand-mark"> / SLAM</span></span></a>
+        <div class="nav-links"><a class="nav-home" href="../../index.html#projects">Tous les projets</a><a href="../../index.html#skills">Compétences</a><a href="../../index.html#journey">Parcours</a></div>
+    </nav>
+    <header class="project-hero section-shell">
+        <p class="section-kicker"><span>PROJET 02</span> Gestion de stock · Démo navigateur</p>
+        <h1>StockPulse</h1>
+        <p class="project-subtitle">Un inventaire d’exemple pour consulter des quantités et simuler des entrées et des sorties.</p>
+        <ul class="technology-list" aria-label="Technologies"><li>JavaScript</li><li>HTML / CSS</li><li>Chart.js</li><li>PHP</li><li>MySQL</li></ul>
+        <div class="action-buttons">
+            <a class="button button-primary" href="client/index.html">Essayer la démo <span aria-hidden="true">↗</span></a>
+            <a class="button button-quiet" href="README.md">Lire le guide <span aria-hidden="true">↗</span></a>
+        </div>
+        <a class="project-back" href="../../index.html#projects">← Retour à tous les projets</a>
+    </header>
+    <main id="project-content" class="project-content section-shell">
+        <div class="project-main">
+            <section class="project-info-card">
+                <h2>Le besoin</h2>
+                <p>Une personne responsable d’un inventaire a besoin d’un aperçu rapide des quantités disponibles et d’un moyen de représenter les mouvements de stock.</p>
+            </section>
+            <section class="project-info-card">
+                <h2>Dans la démo</h2>
+                <ul>
+                    <li>Résumé du nombre de références et des unités disponibles.</li>
+                    <li>Liste des produits et graphique des quantités.</li>
+                    <li>Entrée et sortie de stock avec vérification des quantités.</li>
+                    <li>Sauvegarde dans le navigateur et bouton de réinitialisation.</li>
+                </ul>
+            </section>
+            <section class="project-info-card">
+                <h2>Comment les données circulent</h2>
+                <p>Dans la démo, JavaScript met à jour l’inventaire et le stockage local du navigateur. Le prototype PHP est une autre partie du projet : il propose des routes HTTP pour l’inventaire et utilise MySQL avec PDO.</p>
+                <p class="project-note">Pour rester utilisable hors connexion, le graphique utilise une bibliothèque externe facultative ; sans elle, la liste et les contrôles restent disponibles.</p>
+            </section>
+        </div>
+        <aside class="project-sidebar" aria-label="Informations complémentaires">
+            <section class="project-info-card">
+                <h2>Deux parties indépendantes</h2>
+                <ul>
+                    <li><code>client/</code> : interface autonome avec données locales.</li>
+                    <li><code>api/</code> : prototype PHP authentifié par jeton Bearer.</li>
+                    <li><code>sql/</code> : produits et mouvements enregistrés.</li>
+                </ul>
+            </section>
+            <section class="project-info-card">
+                <h2>Limites actuelles</h2>
+                <p>La démo n’envoie pas de requêtes à l’API. L’API ne fournit pas d’écran de connexion ou de génération de jeton, et le prototype ne gère pas encore plusieurs entrepôts depuis les routes.</p>
+                <h3>Pour progresser</h3>
+                <p>Créer une connexion, relier l’interface à l’API et ajouter des tests aux opérations sur le stock.</p>
+            </section>
+            <section class="project-info-card">
+                <h2>Ressources</h2>
+                <ul>
+                    <li><a href="README.md">Installation et routes API</a></li>
+                    <li><a href="sql/schema.sql">Schéma de base de données</a></li>
+                    <li><a href="client/index.html">Lancer la démo locale</a></li>
+                </ul>
+            </section>
+        </aside>
+    </main>
+    <footer class="site-footer">
+        <a class="footer-brand" href="../../index.html">M'Fabdel-Aziz DIANÉ <span>· Portfolio BTS SIO SLAM</span></a>
+        <a href="https://github.com/abdelazizdiane94-hash/EPITA" target="_blank" rel="noopener noreferrer">Code source <span aria-hidden="true">↗</span></a>
+        <p>&copy; 2026</p>
+    </footer>
+</body>
+</html>

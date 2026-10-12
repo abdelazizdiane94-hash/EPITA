@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Présentation de CollabBoard, tableau de rétrospective Start, Stop, Continue réalisé en JavaScript.">
+    <title>CollabBoard — Présentation du projet</title>
+    <link rel="icon" href="../../epita_logo.png">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+</head>
+<body>
+    <a class="skip-link" href="#project-content">Aller au contenu</a>
+    <nav class="site-nav" aria-label="Navigation principale">
+        <a href="../../index.html" class="brand"><img src="../../epita_logo.png" alt=""><span>Portfolio<span class="brand-mark"> / SLAM</span></span></a>
+        <div class="nav-links"><a class="nav-home" href="../../index.html#projects">Tous les projets</a><a href="../../index.html#skills">Compétences</a><a href="../../index.html#journey">Parcours</a></div>
+    </nav>
+    <header class="project-hero section-shell">
+        <p class="section-kicker"><span>PROJET 03</span> Outil d’équipe · Démo navigateur</p>
+        <h1>CollabBoard</h1>
+        <p class="project-subtitle">Un tableau Start / Stop / Continue pour rassembler les idées et préparer un compte rendu de rétrospective.</p>
+        <ul class="technology-list" aria-label="Technologies"><li>JavaScript</li><li>HTML</li><li>CSS</li><li>Stockage local</li></ul>
+        <div class="action-buttons">
+            <a class="button button-primary" href="public/index.html">Essayer la démo <span aria-hidden="true">↗</span></a>
+            <a class="button button-quiet" href="README.md">Lire le guide <span aria-hidden="true">↗</span></a>
+        </div>
+        <a class="project-back" href="../../index.html#projects">← Retour à tous les projets</a>
+    </header>
+    <main id="project-content" class="project-content section-shell">
+        <div class="project-main">
+            <section class="project-info-card">
+                <h2>Le besoin</h2>
+                <p>À la fin d’un cycle de travail, une équipe peut noter ce qu’elle veut commencer, arrêter ou continuer. Le tableau organise ces retours en trois colonnes simples.</p>
+            </section>
+            <section class="project-info-card">
+                <h2>Fonctionnalités</h2>
+                <ul>
+                    <li>Ajouter et supprimer des idées.</li>
+                    <li>Déplacer les cartes par glisser-déposer ou avec le sélecteur.</li>
+                    <li>Distribuer au maximum cinq votes sur l’ensemble du tableau.</li>
+                    <li>Retrouver ses changements dans le navigateur et réinitialiser les exemples.</li>
+                    <li>Télécharger un compte rendu au format Markdown.</li>
+                </ul>
+            </section>
+            <section class="project-info-card">
+                <h2>Ce que je travaille</h2>
+                <p>Les cartes sont créées avec JavaScript et ajoutées au document. Les textes utilisateurs sont insérés comme texte, puis les données sont sauvegardées au format JSON dans le stockage local du navigateur.</p>
+            </section>
+        </div>
+        <aside class="project-sidebar" aria-label="Informations complémentaires">
+            <section class="project-info-card">
+                <h2>Organisation</h2>
+                <ul>
+                    <li><code>public/index.html</code> : structure du tableau.</li>
+                    <li><code>public/board.css</code> : styles et affichage responsive.</li>
+                    <li><code>public/board.js</code> : cartes, votes, stockage et export.</li>
+                    <li><code>api/</code> : endpoint PHP distinct pour une future synchronisation.</li>
+                </ul>
+            </section>
+            <section class="project-info-card">
+                <h2>À savoir</h2>
+                <p>Les changements sont conservés uniquement dans le navigateur utilisé : les équipes ne partagent pas encore leurs tableaux. L’export PDF et la synchronisation avec l’API ne sont pas implémentés dans la démo.</p>
+                <h3>Prochaine étape</h3>
+                <p>Ajouter une authentification et connecter un tableau à la base de données pour le partager avec une équipe.</p>
+            </section>
+            <section class="project-info-card">
+                <h2>Ressources</h2>
+                <ul>
+                    <li><a href="README.md">Guide de la démo et de l’API</a></li>
+                    <li><a href="sql/schema.sql">Schéma des sprints et des cartes</a></li>
+                    <li><a href="public/index.html">Lancer la démo locale</a></li>
+                </ul>
+            </section>
+        </aside>
+    </main>
+    <footer class="site-footer">
+        <a class="footer-brand" href="../../index.html">M'Fabdel-Aziz DIANÉ <span>· Portfolio BTS SIO SLAM</span></a>
+        <a href="https://github.com/abdelazizdiane94-hash/EPITA" target="_blank" rel="noopener noreferrer">Code source <span aria-hidden="true">↗</span></a>
+        <p>&copy; 2026</p>
+    </footer>
+</body>
+</html>

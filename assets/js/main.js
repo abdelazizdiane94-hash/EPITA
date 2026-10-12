@@ -5,6 +5,8 @@ document.addEventListener('DOMContentLoaded', () => {
     modal.setAttribute('role', 'dialog');
     modal.setAttribute('aria-modal', 'true');
     modal.setAttribute('aria-labelledby', 'chronos-title');
+    modal.setAttribute('aria-describedby', 'demo-description');
+    modal.setAttribute('aria-hidden', 'true');
     modal.innerHTML = `<div class="modal-content chronos-demo">
         <button class="modal-close" type="button" aria-label="Fermer">&times;</button>
         <h2 id="chronos-title">Démonstration interactive</h2>
@@ -39,6 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let nextZooId = 7;
 
     let remainingSeconds = 300;
+    let demoOpener = null;
 
     function formatTime(seconds) {
         return `${String(Math.floor(seconds / 60)).padStart(2, '0')}:${String(seconds % 60).padStart(2, '0')}`;
@@ -152,11 +155,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function closeDemo() {
+        if (modal.getAttribute('aria-hidden') === 'true') return;
         modal.style.display = 'none';
         modal.setAttribute('aria-hidden', 'true');
+        if (demoOpener && demoOpener.isConnected) demoOpener.focus();
     }
 
     function openDemo(project) {
+        demoOpener = document.activeElement;
         if (project === 'zoo') {
             modal.querySelector('#chronos-title').textContent = 'Projet_ZOO | Zoo de Milo';
             renderZooDemo();
@@ -262,7 +268,28 @@ document.addEventListener('DOMContentLoaded', () => {
     }));
     modal.querySelector('.modal-close').addEventListener('click', closeDemo);
     modal.addEventListener('click', event => { if (event.target === modal) closeDemo(); });
-    document.addEventListener('keydown', event => { if (event.key === 'Escape') closeDemo(); });
+    const currentYear = document.getElementById('current-year');
+    if (currentYear) currentYear.textContent = String(new Date().getFullYear());
+    document.addEventListener('keydown', event => {
+        if (modal.getAttribute('aria-hidden') === 'true') return;
+        if (event.key === 'Escape') {
+            closeDemo();
+            return;
+        }
+        if (event.key !== 'Tab') return;
+        const focusable = [...modal.querySelectorAll('a[href], button:not(:disabled), input:not(:disabled), select:not(:disabled), textarea:not(:disabled), [tabindex]:not([tabindex="-1"])')]
+            .filter(element => element.getClientRects().length > 0);
+        if (!focusable.length) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (event.shiftKey && document.activeElement === first) {
+            event.preventDefault();
+            last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+            event.preventDefault();
+            first.focus();
+        }
+    });
 
     window.setInterval(() => {
         if (modal.style.display !== 'block') return;

@@ -1,96 +1,75 @@
-/* Styles for the ChronosDesk application */
-
-/* Reset some default styles */
-body, h1, h2, h3, p {
-    margin: 0;
-    padding: 0;
+:root {
+    color-scheme: dark;
+    --background: #08111f;
+    --surface: #101d2d;
+    --surface-raised: #17273b;
+    --border: #2a3b52;
+    --text: #f0f4f8;
+    --muted: #a5b2c2;
+    --accent: #78e3ca;
+    font-family: "Segoe UI", Arial, sans-serif;
 }
 
-/* General body styles */
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #1e1e1e; /* Dark background */
-    color: #ffffff; /* Light text color */
-    line-height: 1.6;
+* { box-sizing: border-box; }
+body { min-width: 320px; min-height: 100vh; margin: 0; background: var(--background); color: var(--text); line-height: 1.6; }
+body::before { position: fixed; inset: 0; z-index: -1; background: radial-gradient(ellipse at 75% 0, rgba(69, 117, 173, .13), transparent 40%); content: ""; pointer-events: none; }
+a { color: #aac8ff; }
+button, input, textarea, select { font: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.container { width: min(1100px, calc(100% - 36px)); margin-inline: auto; }
+.page-header { border-bottom: 1px solid var(--border); background: rgba(13, 25, 41, .8); }
+.page-heading { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding-block: 22px; }
+.page-heading h1 { margin: 0; font-size: clamp(1.7rem, 4vw, 2.3rem); letter-spacing: -.04em; }
+.eyebrow { margin: 0 0 4px; color: var(--accent); font-size: .73rem; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; }
+.account-panel { display: flex; align-items: center; gap: 14px; }
+.account-panel p { margin: 0; color: var(--muted); font-size: .86rem; }
+.content-grid { display: grid; grid-template-columns: minmax(210px, .7fr) minmax(0, 1.3fr); gap: 16px; padding-block: 25px 48px; }
+.panel { min-width: 0; border: 1px solid var(--border); border-radius: 7px; padding: 22px; background: linear-gradient(145deg, rgba(16, 29, 45, .97), rgba(13, 24, 38, .96)); }
+.panel h2 { margin: 0; font-size: 1.2rem; letter-spacing: -.02em; }
+.stats-panel { align-self: start; }
+.stat-value { margin: 15px 0 0; color: var(--accent); font-size: 2.5rem; font-weight: 650; letter-spacing: -.05em; line-height: 1.2; }
+.muted { margin: 4px 0 0; color: var(--muted); font-size: .85rem; }
+.form-panel form { display: grid; gap: 8px; margin-top: 15px; }
+.form-panel label, .login-panel label { margin-top: 6px; color: #dce5ef; font-size: .85rem; font-weight: 600; }
+.form-panel input, .form-panel textarea, .login-panel input, .ticket-panel select { width: 100%; min-height: 42px; border: 1px solid var(--border); border-radius: 4px; padding: 9px 10px; background: #091321; color: var(--text); }
+.form-panel textarea { resize: vertical; }
+.button { display: inline-flex; min-height: 40px; align-items: center; justify-content: center; border: 1px solid transparent; border-radius: 4px; padding: 8px 13px; color: var(--text); font-size: .84rem; font-weight: 650; text-decoration: none; cursor: pointer; }
+.button-primary { background: var(--accent); color: #081712; }
+.button-primary:hover { background: #a0f1dc; }
+.button-secondary { border-color: var(--border); background: var(--surface-raised); }
+.button-secondary:hover { border-color: #6385a9; }
+.ticket-panel { grid-column: 1 / -1; }
+.section-title { display: flex; align-items: center; justify-content: space-between; margin-bottom: 17px; }
+.table-scroll { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; text-align: left; }
+th, td { border-bottom: 1px solid var(--border); padding: 12px 10px; font-size: .84rem; }
+th { color: var(--muted); font-size: .74rem; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; }
+td { color: #dce5ef; }
+td a { font-weight: 650; text-decoration: none; }
+td a:hover { text-decoration: underline; }
+.status-badge { display: inline-block; border: 1px solid rgba(120, 227, 202, .25); border-radius: 20px; padding: 2px 9px; color: var(--accent); font-size: .75rem; }
+.empty-state { padding-block: 22px; color: var(--muted); text-align: center; }
+.ticket-detail { max-width: 750px; margin: 40px auto; }
+.ticket-detail h2 { margin-block: 20px 5px; }
+.ticket-detail .ticket-description { white-space: pre-wrap; }
+.ticket-detail .status-form { display: flex; flex-wrap: wrap; align-items: end; gap: 10px; margin-block: 20px; }
+.ticket-detail .status-form label { display: grid; gap: 5px; color: var(--muted); font-size: .84rem; }
+.login-shell { display: grid; min-height: 100vh; place-items: center; padding: 20px; }
+.login-panel { width: min(430px, 100%); }
+.login-panel h1 { margin: 0; font-size: 1.7rem; }
+.login-panel form { display: grid; gap: 8px; margin-top: 22px; }
+.login-panel button { margin-top: 10px; }
+.error-message { min-height: 24px; margin: 9px 0; color: #ffaaa3; font-size: .86rem; }
+
+@media (max-width: 680px) {
+    .page-heading { align-items: flex-start; flex-direction: column; }
+    .account-panel { width: 100%; flex-wrap: wrap; justify-content: space-between; }
+    .content-grid { grid-template-columns: 1fr; }
+    .ticket-panel { grid-column: auto; padding: 16px 12px; }
+    th, td { padding: 10px 7px; }
+    .ticket-detail { margin-block: 20px; }
 }
 
-/* Header styles */
-header {
-    background: #333;
-    padding: 20px;
-    text-align: center;
-}
-
-/* Main container styles */
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-}
-
-/* Ticket card styles */
-.ticket-card {
-    background: #2a2a2a;
-    border: 1px solid #444;
-    border-radius: 5px;
-    margin: 15px 0;
-    padding: 15px;
-    transition: transform 0.3s;
-}
-
-.ticket-card:hover {
-    transform: scale(1.02);
-}
-
-/* Button styles */
-.button {
-    background: #007acc;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 15px;
-    cursor: pointer;
-    transition: background 0.3s;
-}
-
-.button:hover {
-    background: #005f99;
-}
-
-/* Modal styles */
-.modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-    padding-top: 60px;
-}
-
-.modal-content {
-    background-color: #fefefe;
-    margin: 5% auto; /* 15% from the top and centered */
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%; /* Could be more or less, depending on screen size */
-}
-
-/* Close button styles */
-.close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
 }

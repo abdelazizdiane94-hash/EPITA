@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Présentation de ChronosDesk, projet PHP de suivi de tickets réalisé pour progresser en BTS SIO SLAM.">
+    <title>ChronosDesk — Présentation du projet</title>
+    <link rel="icon" href="../../epita_logo.png">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+</head>
+<body>
+    <a class="skip-link" href="#project-content">Aller au contenu</a>
+    <nav class="site-nav" aria-label="Navigation principale">
+        <a href="../../index.html" class="brand"><img src="../../epita_logo.png" alt=""><span>Portfolio<span class="brand-mark"> / SLAM</span></span></a>
+        <div class="nav-links"><a class="nav-home" href="../../index.html#projects">Tous les projets</a><a href="../../index.html#skills">Compétences</a><a href="../../index.html#journey">Parcours</a></div>
+    </nav>
+    <header class="project-hero section-shell">
+        <p class="section-kicker"><span>PROJET 01</span> Application PHP · Démonstration locale</p>
+        <h1>ChronosDesk</h1>
+        <p class="project-subtitle">Une petite application de suivi de demandes d’assistance, construite pour pratiquer PHP, SQL et l’organisation du code.</p>
+        <ul class="technology-list" aria-label="Technologies"><li>PHP 8</li><li>PDO</li><li>MySQL</li><li>HTML / CSS</li><li>JavaScript</li></ul>
+        <div class="action-buttons">
+            <a class="button button-primary" href="../../index.html#projects">Voir les projets et la démo <span aria-hidden="true">↗</span></a>
+            <a class="button button-quiet" href="README.md">Installer l’application PHP <span aria-hidden="true">↗</span></a>
+        </div>
+        <a class="project-back" href="../../index.html#projects">← Retour à tous les projets</a>
+    </header>
+    <main id="project-content" class="project-content section-shell">
+        <div class="project-main">
+            <section class="project-info-card">
+                <h2>Le besoin</h2>
+                <p>Une équipe doit pouvoir enregistrer des demandes, retrouver leur état et identifier la personne qui les a créées. ChronosDesk explore ce parcours à travers un petit outil de tickets.</p>
+            </section>
+            <section class="project-info-card">
+                <h2>Fonctionnalités du prototype PHP</h2>
+                <ul>
+                    <li>Connexion d’un utilisateur déjà présent dans la base.</li>
+                    <li>Création d’un ticket et consultation de la liste ou du détail.</li>
+                    <li>Modification du statut réservée aux rôles Technicien et Admin.</li>
+                    <li>Protection des formulaires contre les soumissions CSRF et échappement des textes affichés.</li>
+                </ul>
+            </section>
+            <section class="project-info-card">
+                <h2>Ce que je travaille</h2>
+                <p>Le point d’entrée reçoit les actions, les contrôleurs vérifient les demandes, les modèles exécutent les requêtes PDO et les vues affichent le résultat. Cette séparation permet de retrouver plus facilement le rôle de chaque fichier.</p>
+            </section>
+        </div>
+        <aside class="project-sidebar" aria-label="Informations complémentaires">
+            <section class="project-info-card">
+                <h2>Organisation</h2>
+                <ul>
+                    <li><code>public/</code> : point d’entrée et ressources du navigateur.</li>
+                    <li><code>app/Controllers/</code> : actions, validation et accès.</li>
+                    <li><code>app/Models/</code> : connexion PDO et requêtes SQL.</li>
+                    <li><code>app/Views/</code> : pages PHP affichées.</li>
+                    <li><code>sql/</code> : schéma MySQL.</li>
+                </ul>
+            </section>
+            <section class="project-info-card">
+                <h2>À savoir</h2>
+                <p class="project-note">La démo rapide du portfolio est une simulation JavaScript. Elle ne se connecte pas à la base de données.</p>
+                <h3>Prochaines étapes</h3>
+                <p>Ajouter des tests, une page d’inscription contrôlée et des messages de validation affichés directement dans les pages.</p>
+            </section>
+            <section class="project-info-card">
+                <h2>Ressources</h2>
+                <ul>
+                    <li><a href="README.md">Guide d’installation et de configuration</a></li>
+                    <li><a href="sql/schema.sql">Schéma SQL</a></li>
+                    <li><a href="public/">Point d’entrée PHP</a></li>
+                </ul>
+            </section>
+        </aside>
+    </main>
+    <footer class="site-footer">
+        <a class="footer-brand" href="../../index.html">M'Fabdel-Aziz DIANÉ <span>· Portfolio BTS SIO SLAM</span></a>
+        <a href="https://github.com/abdelazizdiane94-hash/EPITA" target="_blank" rel="noopener noreferrer">Code source <span aria-hidden="true">↗</span></a>
+        <p>&copy; 2026</p>
+    </footer>
+</body>
+</html>

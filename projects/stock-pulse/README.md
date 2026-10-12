@@ -1,53 +1,66 @@
-# StockPulse Project Documentation
+# StockPulse
 
-## Overview
-StockPulse is a secure inventory management solution that utilizes a RESTful API built with PHP and MySQL. The application is designed to provide users with a comprehensive dashboard for managing stock levels, tracking inventory movements, and generating analytical reports.
+[Voir la présentation du projet](./presentation.html)
 
-## Architecture
-The StockPulse project is structured into two main components: the API and the client-side application.
+Démo de gestion d’inventaire composée d’une interface JavaScript autonome et d’une API PHP/MySQL expérimentale. Les deux parties sont séparées : **l’interface de démonstration n’appelle pas l’API**.
 
-### API
-The API is responsible for handling all data operations related to inventory management. It is built using PHP and follows a RESTful architecture. The API includes the following components:
-- **Controllers**: Manage the logic for handling requests and responses.
-- **Middleware**: Handles JWT authentication for secure access to the API.
-- **Database Configuration**: Contains the settings for connecting to the MySQL database.
+## Démo navigateur
 
-### Client
-The client-side application is a dashboard that consumes the API to display inventory data. It is built using HTML, CSS, and JavaScript, and includes:
-- **Dashboard Interface**: Displays stock levels and movements using charts.
-- **JavaScript Logic**: Fetches data from the API and updates the UI dynamically.
+1. Ouvrez `client/index.html` dans un navigateur ou servez le dépôt avec AMPPS.
+2. Ajoutez ou retirez des unités depuis les contrôles de stock.
+3. Les quantités sont conservées dans le stockage local de ce navigateur. Le bouton de réinitialisation restaure les valeurs d’exemple.
 
-## Setup Instructions
-1. **Clone the Repository**
-   ```
-   git clone https://github.com/abdelazizdiane94-hash/EPITA.git
-   cd EPITA/projects/stock-pulse
-   ```
+La démo reste utilisable sans serveur PHP. Le graphique utilise Chart.js chargé depuis un CDN ; si la bibliothèque n’est pas accessible, l’inventaire et ses contrôles restent disponibles.
 
-2. **Database Setup**
-   - Import the SQL schema located in `sql/schema.sql` into your MySQL database.
-   - Update the database configuration in `api/config/db.php` with your database credentials.
+## API PHP (prototype séparé)
 
-3. **Run the API**
-   - Ensure your local server (e.g., AMPPS) is running.
-   - Access the API via `http://localhost/EPITA/projects/stock-pulse/api/index.php`.
+### Prérequis et base
 
-4. **Run the Client**
-   - Open `client/index.html` in your web browser to access the dashboard.
+- PHP 8 avec PDO MySQL, et MySQL ou MariaDB.
+- Importez [`sql/schema.sql`](./sql/schema.sql) dans une base `stock_pulse`.
+- Configurez `STOCK_DB_HOST`, `STOCK_DB_NAME`, `STOCK_DB_USER` et `STOCK_DB_PASSWORD`. Les valeurs par défaut (`127.0.0.1`, `stock_pulse`, `root`, mot de passe vide) conviennent uniquement à une installation locale.
+- Définissez `STOCKPULSE_JWT_SECRET` avec une valeur aléatoire d’au moins 32 caractères.
+- L’API exige un jeton JWT Bearer valide signé en HS256, avec `iss` égal à `stock-pulse`, un `sub` numérique et une date `exp` future. **Aucun endpoint de connexion ou de génération de jeton n’est fourni** : le jeton doit être généré par un outil de test ou un service externe de confiance.
 
-## Usage
-- Use the dashboard to view and manage inventory.
-- The API endpoints can be accessed directly for integration with other applications.
+### Routes
 
-## Features
-- Secure JWT authentication for API access.
-- Real-time inventory tracking and management.
-- Analytical dashboard with visual representations of stock data.
+En utilisant le point d’entrée `api/index.php` :
 
-## License
-This project is licensed under the MIT License. See the LICENSE file for more details.
+| Méthode | Chemin | Description |
+| --- | --- | --- |
+| `GET` | `?` (ou `/inventory`) | Lister les produits |
+| `POST` | `/inventory` | Créer un produit (`name`, `quantity`, `price`) |
+| `PUT` | `/inventory/{id}` | Modifier un produit ; un mouvement est enregistré si la quantité change |
+| `DELETE` | `/inventory/{id}` | Supprimer un produit |
 
-## Author
-M'Fabdel-Aziz (Abdel-Aziz) DIANÉ  
-Email: abdelaziz.diane94@gmail.com  
-GitHub: [abdelazizdiane94-hash](https://github.com/abdelazizdiane94-hash)
+Chaque requête doit inclure `Authorization: Bearer <jeton>` et, pour les écritures, un corps JSON. Par exemple :
+
+```json
+{
+  "name": "Clavier",
+  "quantity": 12,
+  "price": 24.9
+}
+```
+
+Les réponses d’erreur utilisent des codes HTTP et un objet JSON contenant `error`. Les secrets de base de données et de signature se configurent dans l’environnement, jamais dans le dépôt.
+
+## Organisation du projet
+
+```text
+api/
+├── config/       # Connexion PDO
+├── controllers/  # Opérations sur l’inventaire
+├── middleware/   # Vérification des jetons JWT
+└── index.php     # Routage HTTP
+client/           # Démo HTML, CSS et JavaScript indépendante
+sql/              # Schéma MySQL
+```
+
+## Limites actuelles
+
+La démo navigateur utilise des données locales, pas les données SQL. Le prototype d’API n’inclut ni gestion des comptes, ni création de jetons, ni interface de connexion. Les opérations disponibles couvrent l’inventaire de base, sans gestion d’entrepôts dans les routes.
+
+## Auteur
+
+M'Fabdel-Aziz (Abdel-Aziz) DIANÉ · [GitHub](https://github.com/abdelazizdiane94-hash)

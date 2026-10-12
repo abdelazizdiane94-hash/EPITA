@@ -16,7 +16,7 @@
 body { min-width: 320px; min-height: 100vh; margin: 0; background: var(--bg); color: var(--text); line-height: 1.6; }
 body::before { position: fixed; inset: 0; z-index: -1; background-image: linear-gradient(rgba(59,130,246,.035) 1px, transparent 1px), linear-gradient(90deg, rgba(59,130,246,.035) 1px, transparent 1px); background-size: 34px 34px; content: ""; pointer-events: none; }
 button, input, select { font: inherit; }
-button:focus-visible, a:focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
+button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
 .page-shell { width: min(1180px, calc(100% - 40px)); margin-inline: auto; }
 .page-header { padding: 18px 0 30px; border-bottom: 1px solid var(--line); background: linear-gradient(115deg, #0c1422, #090d16 68%); }
 .back-link { display: inline-flex; min-height: 40px; align-items: center; color: #a9c8ff; font-size: .92rem; font-weight: 600; text-decoration: none; }
@@ -45,7 +45,23 @@ main { padding: 32px 0 56px; }
 .vote-button:hover, .add-card:hover { border-color: var(--cyan); background: #1b2b40; }
 .vote-button:disabled { cursor: not-allowed; opacity: .5; }
 .add-card { width: 100%; margin-top: 10px; border-style: dashed; color: #b5c3d6; }
+.card-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 7px; color: #c6d2e2; font-size: .78rem; }
+.card-controls select, .delete-card { min-height: 32px; border: 1px solid #35435a; border-radius: 4px; padding: 5px 8px; background: #182438; color: var(--text); font-size: .76rem; }
+.card-controls button { min-height: 32px; border: 1px solid #35435a; border-radius: 4px; padding: 5px 8px; background: #182438; color: var(--text); font-size: .76rem; cursor: pointer; }
+.card-controls button:hover, .card-controls select:hover { border-color: var(--cyan); }
+.card-controls button:disabled { cursor: not-allowed; opacity: .5; }
+.add-card-form { display: grid; gap: 7px; margin-top: 10px; border: 1px solid var(--line); border-radius: 4px; padding: 11px; background: var(--panel-soft); }
+.add-card-form[hidden] { display: none; }
+.add-card-form label { color: #c6d2e2; font-size: .77rem; font-weight: 600; }
+.add-card-form label span { color: var(--muted); font-weight: 400; }
+.add-card-form input, .add-card-form textarea { width: 100%; border: 1px solid #35435a; border-radius: 4px; padding: 8px; background: #090f1a; color: var(--text); }
+.add-card-form .button-primary { width: 100%; border-color: var(--blue); background: var(--blue); }
+.add-card-form .button-primary:hover { background: #2869d1; }
 .board-actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-top: 18px; }
+.action-group { display: flex; flex-wrap: wrap; gap: 9px; }
+.button-secondary { background: #151f30; }
+.storage-status { min-height: 24px; margin-top: 12px; color: var(--muted); font-size: .84rem; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; clip-path: inset(50%); }
 .status-line { margin: 0; color: var(--muted); font-size: .88rem; }
 .button-primary { border-color: var(--blue); background: var(--blue); }
 .button-primary:hover { background: #2869d1; }
@@ -59,7 +75,8 @@ main { padding: 32px 0 56px; }
     .column { min-height: 250px; }
     .card-container { min-height: 130px; }
     .board-actions { align-items: stretch; flex-direction: column; }
-    .button-primary { width: 100%; }
+    .action-group { flex-direction: column; }
+    .action-group .button { width: 100%; }
 }
 
 @media (prefers-reduced-motion: reduce) {

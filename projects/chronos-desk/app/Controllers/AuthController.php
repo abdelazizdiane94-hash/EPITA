@@ -22,7 +22,10 @@ class AuthController {
                 ':role' => 'Collaborateur'
             ]);
         } catch (PDOException $exception) {
-            return false;
+            if ($exception->getCode() === '23000') {
+                return false;
+            }
+            throw $exception;
         }
     }
 

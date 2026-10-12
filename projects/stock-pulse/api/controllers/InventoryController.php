@@ -32,15 +32,36 @@ class InventoryController {
     public function updateInventoryItem($id) {
         $data = $this->requestData();
         if (!$this->validItem($data)) return $this->respond(['error' => 'Invalid inventory item.'], 422);
-        $statement = $this->db->prepare('UPDATE products SET name = :name, quantity = :quantity, price = :price WHERE id = :id');
-        $statement->execute([':name' => trim($data['name']), ':quantity' => (int) $data['quantity'], ':price' => (float) $data['price'], ':id' => (int) $id]);
-        $this->respond(['updated' => $statement->rowCount() > 0]);
+        $this->db->beginTransaction();
+        try {
+            $find = $this->db->prepare('SELECT quantity FROM products WHERE id = :id FOR UPDATE');
+            $find->execute([':id' => (int) $id]);
+            $current = $find->fetch();
+            if (!$current) {
+                $this->db->rollBack();
+                return $this->respond(['error' => 'Inventory item not found.'], 404);
+            }
+
+            $quantity = (int) $data['quantity'];
+            $statement = $this->db->prepare('UPDATE products SET name = :name, quantity = :quantity, price = :price WHERE id = :id');
+            $statement->execute([':name' => trim($data['name']), ':quantity' => $quantity, ':price' => (float) $data['price'], ':id' => (int) $id]);
+            $difference = $quantity - (int) $current['quantity'];
+            if ($difference !== 0) {
+                $this->recordMovement((int) $id, abs($difference), $difference > 0 ? 'IN' : 'OUT');
+            }
+            $this->db->commit();
+            $this->respond(['updated' => true]);
+        } catch (Throwable $exception) {
+            if ($this->db->inTransaction()) $this->db->rollBack();
+            throw $exception;
+        }
     }
 
     public function deleteInventoryItem($id) {
         $statement = $this->db->prepare('DELETE FROM products WHERE id = :id');
         $statement->execute([':id' => (int) $id]);
-        $this->respond(['deleted' => $statement->rowCount() > 0]);
+        if ($statement->rowCount() === 0) return $this->respond(['error' => 'Inventory item not found.'], 404);
+        $this->respond(['deleted' => true]);
     }
 
     private function requestData() {
@@ -49,7 +70,16 @@ class InventoryController {
     }
 
     private function validItem(array $data) {
-        return isset($data['name'], $data['quantity'], $data['price']) && is_string($data['name']) && trim($data['name']) !== '' && strlen($data['name']) <= 255 && filter_var($data['quantity'], FILTER_VALIDATE_INT) !== false && (int) $data['quantity'] >= 0 && is_numeric($data['price']) && (float) $data['price'] >= 0;
+        if (!isset($data['name'], $data['quantity'], $data['price']) || !is_string($data['name']) || trim($data['name']) === '' || strlen($data['name']) > 255) {
+            return false;
+        }
+        if (!is_int($data['quantity']) || $data['quantity'] < 0 || $data['quantity'] > 4294967295) {
+            return false;
+        }
+        if ((!is_int($data['price']) && !is_float($data['price'])) || !is_finite((float) $data['price'])) {
+            return false;
+        }
+        return $data['price'] >= 0 && $data['price'] <= 99999999.99;
     }
 
     private function recordMovement(int $productId, int $quantity, string $type) {

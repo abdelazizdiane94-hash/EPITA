@@ -1,55 +1,59 @@
-# CollabBoard Project Documentation
+# CollabBoard
 
-## Overview
-CollabBoard is an interactive Agile retrospective tool designed to facilitate team collaboration and feedback collection. It allows users to create, manage, and vote on retrospective cards using a drag-and-drop interface. The application is built with JavaScript for the front-end and PHP for the back-end, utilizing a MySQL database for data persistence.
+[Voir la présentation du projet](./presentation.html)
 
-## Features
-- **Drag-and-Drop Interface**: Users can easily move cards between different categories (Start, Stop, Continue) using HTML5 Drag and Drop API.
-- **Voting System**: Each user can vote on cards, with a limit of 5 votes per session to prioritize feedback.
-- **Data Synchronization**: The application syncs the state of the board with the database, ensuring that all changes are saved and can be retrieved later.
-- **Export Functionality**: Users can export the board state as Markdown or PDF for documentation purposes.
+Tableau Start / Stop / Continue pour organiser une rétrospective d’équipe. L’interface s’utilise au clavier ou à la souris et permet de déplacer les cartes, répartir cinq votes et télécharger un compte rendu Markdown.
 
-## Project Structure
-```
-collab-board/
-├── README.md
-├── api/
-│   └── sync.php
-├── public/
-│   ├── board.css
-│   ├── board.js
-│   └── index.html
-└── sql/
-    └── schema.sql
-```
+## Démo navigateur
 
-## Setup Instructions
-1. **Clone the Repository**: 
+Ouvrez `public/index.html` dans un navigateur ou servez le projet avec AMPPS. La démo :
+
+- propose trois cartes d’exemple et permet d’en ajouter jusqu’à 100 ;
+- enregistre cartes, colonnes et votes dans le stockage local du navigateur ;
+- limite à cinq le nombre de votes par tableau ;
+- permet de réordonner les idées entre colonnes par glisser-déposer ou avec le sélecteur de destination ;
+- exporte le tableau courant dans un fichier Markdown.
+
+Le stockage est local à un navigateur et un appareil ; il ne s’agit pas d’une synchronisation en temps réel entre membres d’une équipe. L’export PDF n’est pas implémenté.
+
+## Prototype d’API
+
+`api/sync.php` est un endpoint PHP/MySQL distinct de l’interface. L’interface de démonstration n’envoie pas de requêtes à cet endpoint.
+
+1. Utilisez PHP 8 avec PDO MySQL et MySQL ou MariaDB.
+2. Créez la base `collab_board`, puis importez [`sql/schema.sql`](./sql/schema.sql).
+3. Configurez `COLLAB_DB_HOST`, `COLLAB_DB_NAME`, `COLLAB_DB_USER` et `COLLAB_DB_PASSWORD`. Les paramètres locaux par défaut sont `127.0.0.1`, `collab_board`, `root` et mot de passe vide.
+4. Définissez `COLLABBOARD_JWT_SECRET` avec au moins 32 caractères aléatoires.
+5. Envoyez un `POST` JSON à `api/sync.php`, avec l’en-tête `Authorization: Bearer <jeton>` et un objet de la forme :
+
+   ```json
+   {
+     "sprint_id": 1,
+     "cards": [
+       {
+         "title": "Documenter les décisions",
+         "description": "Garder une trace des choix.",
+         "status": "start",
+         "position": 0
+       }
+     ]
+   }
    ```
-   git clone https://github.com/abdelazizdiane94-hash/EPITA.git
-   ```
 
-2. **Database Setup**:
-   - Import the SQL schema located in `sql/schema.sql` into your MySQL database.
-   - Ensure that the database connection settings in `api/sync.php` are correctly configured to match your database credentials.
+   L’identifiant de sprint doit exister dans la base. Le jeton doit être signé en HS256, avoir `iss` égal à `collab-board`, un `sub` numérique positif et une date `exp` future. Aucun endpoint de connexion ou de génération de jeton n’est fourni. Chaque requête remplace toutes les cartes du sprint indiqué dans une transaction.
 
-3. **Run the Application**:
-   - Start your local server (e.g., using AMPPS).
-   - Access the application via your web browser at `http://localhost/collab-board/public/index.html`.
+## Structure
 
-## Usage
-- Open the application in your browser.
-- Drag and drop cards into the appropriate categories.
-- Click on cards to vote and provide feedback.
-- Use the export feature to save your retrospective results.
+```text
+api/       # Endpoint de synchronisation et vérification JWT
+public/    # Démo statique : HTML, CSS, JavaScript
+sql/       # Tables de sprints, cartes, utilisateurs et votes
+```
 
-## Technologies Used
-- **Front-End**: HTML5, CSS3, JavaScript (ES6)
-- **Back-End**: PHP
-- **Database**: MySQL
+## Pour aller plus loin
 
-## Contribution
-Contributions are welcome! Please submit a pull request or open an issue for any enhancements or bug fixes.
+Une prochaine étape serait de connecter l’interface à l’API après avoir ajouté une gestion des utilisateurs et des jetons, puis d’écrire des tests automatisés pour la validation et la synchronisation.
 
-## License
-This project is licensed under the MIT License. See the LICENSE file for more details.
+## Auteur
+
+M'Fabdel-Aziz (Abdel-Aziz) DIANÉ · [GitHub](https://github.com/abdelazizdiane94-hash)

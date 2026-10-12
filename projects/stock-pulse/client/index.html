@@ -3,44 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StockPulse Dashboard</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <meta name="description" content="Démo locale de gestion de stock StockPulse.">
+    <title>StockPulse — Gestion de stock</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js" defer></script>
     <script src="app.js" defer></script>
 </head>
 <body>
     <header class="page-header">
         <div class="page-shell">
             <a class="back-link" href="../../../index.html">← Retour au Portfolio Principal</a>
-            <p class="eyebrow">Démo interactive · API REST / Chart.js</p>
+            <p class="eyebrow">Démo navigateur · inventaire local</p>
             <h1>StockPulse</h1>
-            <p>Visualisez et gérez vos stocks en temps réel.</p>
+            <p>Consultez un inventaire exemple et simulez des mouvements de stock.</p>
         </div>
     </header>
     <main>
         <section id="inventory" class="page-shell">
             <div class="section-heading">
                 <div><p class="eyebrow">Vue d’ensemble</p><h2>Inventaire</h2></div>
-                <span class="mode-indicator"><span></span> Démonstration locale</span>
+                <span class="mode-indicator"><span></span> Démonstration locale · navigateur</span>
+            </div>
+            <div class="summary-grid" aria-label="Résumé de l'inventaire">
+                <article class="summary-card"><span>Références</span><strong id="product-count">0</strong></article>
+                <article class="summary-card"><span>Unités en stock</span><strong id="unit-count">0</strong></article>
+                <article class="summary-card"><span>Stock bas (≤ 10)</span><strong id="low-stock-count">0</strong></article>
             </div>
             <div class="panel chart-panel">
                 <div class="chart-container"><canvas id="stockChart" role="img" aria-label="Graphique des quantités en stock"></canvas></div>
+                <p id="chart-status" class="chart-note" role="status">Le graphique complète la liste détaillée des quantités ci-dessous.</p>
             </div>
             <div class="stock-controls">
-                <label>Produit<select id="product-select"></select></label>
-                <label>Quantité<input id="movement-quantity" type="number" min="1" step="1" value="5"></label>
+                <label for="product-select">Produit<select id="product-select"></select></label>
+                <label for="movement-quantity">Quantité<input id="movement-quantity" type="number" min="1" step="1" value="5" inputmode="numeric"></label>
                 <button id="stock-in" class="button button-primary" type="button">＋ Entrée de stock</button>
                 <button id="stock-out" class="button button-secondary" type="button">－ Sortie de stock</button>
             </div>
             <p id="stock-status" class="status-line" role="status">Données de démonstration chargées.</p>
             <ul id="inventoryList" class="inventory-list" aria-label="Quantités en stock"></ul>
+            <div class="reset-row">
+                <p>Les modifications sont conservées dans ce navigateur.</p>
+                <button id="reset-stock" class="button button-secondary" type="button">Réinitialiser la démo</button>
+            </div>
         </section>
     </main>
     <footer class="site-footer">
-        <p>&copy; 2023 M'Fabdel-Aziz (Abdel-Aziz) DIANÉ</p>
+        <p>&copy; <span id="current-year">2026</span> M'Fabdel-Aziz DIANÉ</p>
     </footer>
 </body>
 </html>

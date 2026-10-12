@@ -48,6 +48,7 @@ try {
             echo json_encode(['error' => 'Method not allowed.']);
     }
 } catch (Throwable $exception) {
+    error_log('StockPulse API request failed: ' . $exception->getMessage());
     http_response_code(500);
-    echo json_encode(['error' => 'The request could not be completed.']);
+    echo json_encode(['error' => 'The request could not be completed.'], JSON_UNESCAPED_UNICODE | JSON_INVALID_UTF8_SUBSTITUTE);
 }

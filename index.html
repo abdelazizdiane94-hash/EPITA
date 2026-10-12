@@ -1,113 +1,170 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio de M'Fabdel-Aziz (Abdel-Aziz) DIANÉ</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#08111f">
+    <meta name="description" content="Portfolio de M'Fabdel-Aziz DIANÉ, étudiant en BTS SIO SLAM : projets web, compétences et parcours.">
+    <title>M'Fabdel-Aziz DIANÉ — Portfolio développeur</title>
     <link rel="icon" href="./epita_logo.png">
     <link rel="stylesheet" href="assets/css/style.css">
     <script src="assets/js/main.js" defer></script>
 </head>
 <body>
+    <a class="skip-link" href="#main-content">Aller au contenu</a>
     <nav class="site-nav" aria-label="Navigation principale">
-        <a href="#home" class="brand"><img src="./epita_logo.png" alt="EPITA"> <span>Portfolio EPITA</span></a>
-        <a href="#projects">Projets</a>
-        <a href="#quality">Qualité</a>
+        <a href="#home" class="brand"><img src="./epita_logo.png" alt=""><span>Portfolio<span class="brand-mark"> / SLAM</span></span></a>
+        <div class="nav-links">
+            <a href="#projects">Projets</a>
+            <a href="#skills">Compétences</a>
+            <a href="#journey">Parcours</a>
+        </div>
     </nav>
-    <header>
-        <section class="hero" id="home">
-            <img class="hero-logo" src="./epita_logo.png" alt="Logo EPITA">
-            <h1>M'Fabdel-Aziz (Abdel-Aziz) DIANÉ</h1>
-            <h2>Étudiant en 2ème année de BTS SIO option SLAM (Lycée Parc de Vilgénis, Massy, 2025-2027) | Candidat au Cycle Ingénieur EPITA en Apprentissage — Majeure DWNA (Septembre 2027).</h2>
-            <p>Coordonnées : 7 rue Louis Aragon, 94310 Orly | 07 67 46 83 18 | abdelaziz.diane94@gmail.com | <a href="https://github.com/abdelazizdiane94-hash/EPITA">Lien GitHub</a>.</p>
-            <div class="action-buttons">
-                <a class="button" href="#projects">Explorer les 4 Projets</a>
-                <a class="button" href="./CV%20M%27Fabdel-Aziz%20DIAN%C3%89%20-%20Candidature%20EPITA.pdf" download>Télécharger mon CV</a>
-                <a class="button" href="./Lettre%20de%20Motivation%20M%27Fabdel-Aziz%20DIAN%C3%89%20-%20Candidature%20EPITA.pdf" download>Télécharger ma Lettre de Motivation</a>
+
+    <header class="hero" id="home">
+        <div class="hero-inner">
+            <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> Étudiant développeur · Massy, France</p>
+            <h1>M'Fabdel-Aziz<br><span>(Abdel-Aziz) DIANÉ</span></h1>
+            <p class="hero-lead">Je conçois des applications web utiles, de la base de données à l’interface.</p>
+            <p class="hero-detail">En 2<sup>e</sup> année de BTS SIO, option SLAM au lycée Parc de Vilgénis. Je souhaite poursuivre en cycle ingénieur à l’EPITA, en apprentissage, dans la majeure Développement Web et Nouvelles Applications.</p>
+            <div class="hero-tags" aria-label="Technologies principales">
+                <span>PHP</span><span>JavaScript</span><span>SQL</span><span>HTML &amp; CSS</span>
             </div>
-        </section>
+            <div class="action-buttons">
+                <a class="button button-primary" href="#projects">Découvrir mes projets <span aria-hidden="true">↓</span></a>
+                <a class="button button-quiet" href="./CV%20M%27Fabdel-Aziz%20DIAN%C3%89%20-%20Candidature%20EPITA.pdf" download>Télécharger mon CV</a>
+                <a class="text-link" href="mailto:abdelaziz.diane94@gmail.com">Me contacter <span aria-hidden="true">↗</span></a>
+            </div>
+            <p class="hero-location">Candidature EPITA · rentrée septembre 2027</p>
+        </div>
+        <div class="hero-orbit" aria-hidden="true"><span>01</span><span>CODE · TEST · APPRENDRE</span></div>
     </header>
 
-    <main>
-        <section class="skills">
-            <h3>Compétences Techniques</h3>
-            <ul>
-                <li>Langages : PHP, Java, HTML5, CSS3, JavaScript (ES6+), Python.</li>
-                <li>Bases de données : Modélisation (MCD/MLD) et requêtage (SQL, MySQL, PostgreSQL).</li>
-                <li>Outils & Environnements : Visual Studio Code, AMPPS, Windows PowerShell, Git/GitHub.</li>
-                <li>Infrastructure : Installation et maintenance de postes clients et réseau.</li>
-            </ul>
+    <main id="main-content">
+        <section class="intro section-shell" aria-labelledby="intro-title">
+            <div class="section-kicker"><span>01</span> À propos</div>
+            <div>
+                <h2 id="intro-title">Apprendre en construisant.</h2>
+                <p>Mes projets me permettent de mettre en pratique les bases du développement : organiser le code, manipuler des données, concevoir une interface claire et corriger les erreurs rencontrées.</p>
+            </div>
         </section>
 
-        <section class="projects" id="projects">
-            <h3>Vitrine des Projets Web</h3>
+        <section class="projects section-shell" id="projects" aria-labelledby="projects-title">
+            <div class="section-heading">
+                <div>
+                    <div class="section-kicker"><span>02</span> Sélection</div>
+                    <h2 id="projects-title">Des projets, du concret.</h2>
+                </div>
+                <p>Des exercices personnels et académiques pour progresser pas à pas.</p>
+            </div>
             <div class="project-filters" role="group" aria-label="Filtrer les réalisations">
                 <button type="button" class="filter-button is-active" data-filter="all" aria-pressed="true">Tous</button>
-                <button type="button" class="filter-button" data-filter="perso" aria-pressed="false">Projets Personnels</button>
-                <button type="button" class="filter-button" data-filter="academique" aria-pressed="false">Projets Académiques &amp; TP</button>
-                <button type="button" class="filter-button" data-filter="outils" aria-pressed="false">Open Source &amp; Outils</button>
+                <button type="button" class="filter-button" data-filter="perso" aria-pressed="false">Personnels</button>
+                <button type="button" class="filter-button" data-filter="academique" aria-pressed="false">Académiques</button>
+                <button type="button" class="filter-button" data-filter="outils" aria-pressed="false">Ressources</button>
             </div>
-            <div class="project-card" data-category="perso">
-                <h4>ChronosDesk</h4>
-                <p>Application métier en architecture MVC gérant le suivi d'incidents (Helpdesk).</p>
-                <button type="button" data-demo="chronos-desk">Lancer la Démo Interactive</button>
-                <a class="button" href="projects/chronos-desk/README.md">Voir le Code Source</a>
-            </div>
-            <div class="project-card" data-category="perso">
-                <h4>StockPulse</h4>
-                <p>Solution d'inventaire découplée reposant sur une API REST sécurisée par JWT.</p>
-                <a class="button" href="projects/stock-pulse/client/index.html">Ouvrir la Démo Interactive</a>
-                <a class="button" href="projects/stock-pulse/README.md">Voir le Code Source</a>
-            </div>
-            <div class="project-card" data-category="perso">
-                <h4>CollabBoard</h4>
-                <p>Outil interactif de rétrospective Agile avec Drag & Drop.</p>
-                <a class="button" href="projects/collab-board/public/index.html">Ouvrir la Démo Interactive</a>
-                <a class="button" href="projects/collab-board/README.md">Voir le Code Source</a>
-            </div>
-            <div class="project-card academic-project" data-category="academique">
-                <h4>Projet_ZOO | Zoo de Milo</h4>
-                <p>Travail académique de BTS SIO SLAM : sessions PHP, rôles de menu et gestion de données relationnelles pour un parc zoologique.</p>
-                <button type="button" data-demo="zoo">Lancer la Démo Interactive</button>
-                <a class="button" href="Projet_ZOO/README.md">Documentation du projet</a>
-                <a class="button" href="Projet_ZOO/gestionzoo.sql">Schéma SQL</a>
-            </div>
-            <div class="project-card resource-project" data-category="outils">
-                <h4>Open Source &amp; Outils</h4>
-                <p>Documentation et sources des projets du portfolio, avec les scripts SQL et les démonstrations statiques.</p>
-                <a class="button" href="README.md">Documentation du portfolio</a>
-                <a class="button" href="https://github.com/abdelazizdiane94-hash/EPITA" target="_blank" rel="noopener">Dépôt GitHub</a>
+            <div class="project-grid">
+                <article class="project-card" data-category="perso">
+                    <div class="project-topline"><span class="project-number">01</span><span class="project-type">Application PHP</span></div>
+                    <h3>ChronosDesk</h3>
+                    <p>Une démonstration de suivi de tickets : création, statuts et affichage des demandes dans une application PHP.</p>
+                    <ul class="technology-list" aria-label="Technologies"><li>PHP</li><li>MySQL</li><li>JavaScript</li></ul>
+                    <div class="project-links">
+                        <a class="button button-small" href="projects/chronos-desk/presentation.html">Découvrir le projet <span aria-hidden="true">→</span></a>
+                        <button type="button" class="text-link demo-link" data-demo="chronos-desk">Démo rapide</button>
+                    </div>
+                </article>
+                <article class="project-card" data-category="perso">
+                    <div class="project-topline"><span class="project-number">02</span><span class="project-type">Gestion de stock</span></div>
+                    <h3>StockPulse</h3>
+                    <p>Un tableau de bord pour consulter un inventaire de démonstration et simuler des entrées et sorties de stock.</p>
+                    <ul class="technology-list" aria-label="Technologies"><li>PHP</li><li>API REST</li><li>JavaScript</li></ul>
+                    <div class="project-links">
+                        <a class="button button-small" href="projects/stock-pulse/presentation.html">Découvrir le projet <span aria-hidden="true">→</span></a>
+                        <a class="text-link" href="projects/stock-pulse/client/index.html">Démo interactive <span aria-hidden="true">↗</span></a>
+                    </div>
+                </article>
+                <article class="project-card" data-category="perso">
+                    <div class="project-topline"><span class="project-number">03</span><span class="project-type">Outil d’équipe</span></div>
+                    <h3>CollabBoard</h3>
+                    <p>Un tableau Start / Stop / Continue pour ajouter des idées, les organiser et voter en équipe.</p>
+                    <ul class="technology-list" aria-label="Technologies"><li>HTML</li><li>CSS</li><li>JavaScript</li></ul>
+                    <div class="project-links">
+                        <a class="button button-small" href="projects/collab-board/presentation.html">Découvrir le projet <span aria-hidden="true">→</span></a>
+                        <a class="text-link" href="projects/collab-board/public/index.html">Démo interactive <span aria-hidden="true">↗</span></a>
+                    </div>
+                </article>
+                <div class="project-card academic-project" data-category="academique">
+                    <h3>Projet_ZOO | Zoo de Milo</h3>
+                    <p>Travail académique de BTS SIO SLAM : sessions PHP, rôles de menu et gestion de données relationnelles pour un parc zoologique.</p>
+                    <button type="button" data-demo="zoo">Lancer la Démo Interactive</button>
+                    <a class="button" href="Projet_ZOO/README.md">Documentation du projet</a>
+                    <a class="button" href="Projet_ZOO/gestionzoo.sql">Schéma SQL</a>
+                </div>
+                <article class="project-card resource-project" data-category="outils">
+                    <div class="project-topline"><span class="project-number">↗</span><span class="project-type">Code source</span></div>
+                    <h3>Sources &amp; ressources</h3>
+                    <p>Retrouvez le code, les scripts SQL et les guides d’installation dans le dépôt du portfolio.</p>
+                    <div class="project-links">
+                        <a class="button button-small" href="README.md">Guide du portfolio</a>
+                        <a class="text-link" href="https://github.com/abdelazizdiane94-hash/EPITA" target="_blank" rel="noopener noreferrer">Dépôt GitHub <span aria-hidden="true">↗</span></a>
+                    </div>
+                </article>
             </div>
         </section>
 
-        <section class="quality" id="quality">
-            <h3>Qualité &amp; Documentation</h3>
-            <p>Chaque projet dispose d'une documentation dédiée. Les démonstrations navigateur utilisent des données locales; les applications PHP nécessitent AMPPS et MySQL.</p>
-            <a class="button" href="Projet_ZOO/README.md">Guide technique de Projet_ZOO</a>
+        <section class="skills section-shell" id="skills" aria-labelledby="skills-title">
+            <div class="section-heading">
+                <div>
+                    <div class="section-kicker"><span>03</span> Savoir-faire</div>
+                    <h2 id="skills-title">Des bases solides, en progression.</h2>
+                </div>
+                <p>Les outils et notions rencontrés en formation et dans mes projets.</p>
+            </div>
+            <div class="skill-grid">
+                <article class="skill-card"><span class="skill-index">A</span><h3>Développement</h3><p>PHP · Java · JavaScript · HTML5 · CSS3</p></article>
+                <article class="skill-card"><span class="skill-index">B</span><h3>Données</h3><p>SQL · MySQL · PostgreSQL · MCD / MLD</p></article>
+                <article class="skill-card"><span class="skill-index">C</span><h3>Outils</h3><p>Git · GitHub · VS Code · AMPPS</p></article>
+                <article class="skill-card"><span class="skill-index">D</span><h3>Environnement</h3><p>Installation et maintenance de postes clients et réseau</p></article>
+            </div>
         </section>
 
-        <section class="experience">
-            <h3>Parcours & Expériences</h3>
-            <ul>
-                <li>16 Nov 2026 - 18 Déc 2026 : Stage en développement informatique (5 semaines).</li>
-                <li>Juin 2026 - Juillet 2026 : Stagiaire Développement Web & Gestion chez Pangée ONG.</li>
-                <li>Nov 2024 - Déc 2024 : Stagiaire Informatique à la Mairie d'Orly.</li>
-                <li>Juin 2024 : Stagiaire Maintenance et Programmation chez D8.</li>
-                <li>2022 - 2025 : Bac Pro Systèmes Numériques option ARED.</li>
-            </ul>
+        <section class="quality section-shell" aria-labelledby="quality-title">
+            <div class="section-kicker"><span>04</span> Ma façon de travailler</div>
+            <div class="quality-content">
+                <h2 id="quality-title">Du code lisible.<br>Des choix expliqués.</h2>
+                <p>Je privilégie des fonctionnalités compréhensibles, des formulaires contrôlés et des requêtes préparées. Chaque projet présente ses technologies et ses limites, avec des étapes d’installation pour le reprendre facilement.</p>
+                <a class="text-link" href="README.md">Voir le guide du portfolio <span aria-hidden="true">↗</span></a>
+            </div>
         </section>
 
-        <section class="soft-skills">
-            <h3>Profil & Soft Skills</h3>
-            <ul>
-                <li>Boxe anglaise (3 ans de pratique assidue).</li>
-                <li>Esprit analytique : Theorycrafting et optimisation statistique complexe.</li>
-            </ul>
+        <section class="journey section-shell" id="journey" aria-labelledby="journey-title">
+            <div class="section-heading">
+                <div><div class="section-kicker"><span>05</span> Parcours</div><h2 id="journey-title">En chemin.</h2></div>
+                <p>Des expériences variées qui nourrissent mon projet professionnel.</p>
+            </div>
+            <ol class="timeline">
+                <li><span class="timeline-date">Nov. – déc. 2026</span><div><h3>Stage en développement informatique</h3><p>Stage de cinq semaines.</p></div><span class="timeline-status">À venir</span></li>
+                <li><span class="timeline-date">Juin – juil. 2026</span><div><h3>Pangée ONG</h3><p>Stage en développement web et gestion.</p></div></li>
+                <li><span class="timeline-date">Nov. – déc. 2024</span><div><h3>Mairie d’Orly</h3><p>Stage en informatique.</p></div></li>
+                <li><span class="timeline-date">Juin 2024</span><div><h3>D8</h3><p>Stage en maintenance et programmation.</p></div></li>
+                <li><span class="timeline-date">2022 – 2025</span><div><h3>Baccalauréat professionnel Systèmes numériques</h3><p>Option ARED.</p></div></li>
+            </ol>
+        </section>
+
+        <section class="contact section-shell" aria-labelledby="contact-title">
+            <div>
+                <div class="section-kicker"><span>06</span> Et ensuite ?</div>
+                <h2 id="contact-title">Parlons de votre projet.</h2>
+            </div>
+            <a class="button button-primary" href="mailto:abdelaziz.diane94@gmail.com">abdelaziz.diane94@gmail.com <span aria-hidden="true">↗</span></a>
         </section>
     </main>
 
-    <footer>
-        <p>&copy; 2023 M'Fabdel-Aziz (Abdel-Aziz) DIANÉ. Tous droits réservés.</p>
+    <footer class="site-footer">
+        <a href="#home" class="footer-brand">M'Fabdel-Aziz DIANÉ <span>· Portfolio BTS SIO SLAM</span></a>
+        <a href="https://github.com/abdelazizdiane94-hash" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+        <p>&copy; <span id="current-year">2026</span></p>
     </footer>
 </body>
 </html>

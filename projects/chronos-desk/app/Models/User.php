@@ -40,4 +40,3 @@ class User {
         $this->role = $role;
     }
 }
-?>
