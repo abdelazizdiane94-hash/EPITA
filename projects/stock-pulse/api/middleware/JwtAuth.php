@@ -1,60 +1,45 @@
 <?php
-// JwtAuth.php
-
 class JwtAuth {
-    private $secretKey = 'your_secret_key'; // Change this to a secure key
-    private $issuer = 'http://yourdomain.com'; // Change this to your domain
-    private $audience = 'http://yourdomain.com'; // Change this to your domain
-    private $expirationTime = 3600; // Token expiration time in seconds
-
-    // Generate JWT token
-    public function generateToken($userId) {
-        $issuedAt = time();
-        $expirationTime = $issuedAt + $this->expirationTime; // jwt valid for 1 hour
-        $payload = [
-            'iat' => $issuedAt,
-            'exp' => $expirationTime,
-            'iss' => $this->issuer,
-            'aud' => $this->audience,
-            'data' => [
-                'userId' => $userId
-            ]
-        ];
-
-        return $this->encode($payload);
+    private function secret() {
+        $secret = getenv('STOCKPULSE_JWT_SECRET');
+        if (!$secret || strlen($secret) < 32) {
+            throw new RuntimeException('STOCKPULSE_JWT_SECRET must contain at least 32 characters.');
+        }
+        return $secret;
     }
 
-    // Encode the payload to JWT
-    private function encode($payload) {
-        $header = json_encode(['typ' => 'JWT', 'alg' => 'HS256']);
-        $base64UrlHeader = str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($header));
-        $base64UrlPayload = str_replace(['+', '/', '='], ['-', '_', ''], base64_encode(json_encode($payload)));
-        $signature = hash_hmac('sha256', $base64UrlHeader . "." . $base64UrlPayload, $this->secretKey, true);
-        $base64UrlSignature = str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($signature));
-
-        return $base64UrlHeader . "." . $base64UrlPayload . "." . $base64UrlSignature;
+    public function generateToken(int $userId) {
+        $header = $this->base64UrlEncode(json_encode(['typ' => 'JWT', 'alg' => 'HS256']));
+        $payload = $this->base64UrlEncode(json_encode(['sub' => $userId, 'iat' => time(), 'exp' => time() + 3600, 'iss' => 'stock-pulse']));
+        $content = $header . '.' . $payload;
+        return $content . '.' . $this->base64UrlEncode(hash_hmac('sha256', $content, $this->secret(), true));
     }
 
-    // Validate the JWT token
     public function validateToken($token) {
-        $tokenParts = explode('.', $token);
-        if (count($tokenParts) !== 3) {
-            return false; // Invalid token
-        }
+        $parts = explode('.', (string) $token);
+        if (count($parts) !== 3) return false;
+        [$headerPart, $payloadPart, $signaturePart] = $parts;
+        $header = json_decode($this->base64UrlDecode($headerPart), true);
+        $payload = json_decode($this->base64UrlDecode($payloadPart), true);
+        if (!is_array($header) || ($header['alg'] ?? null) !== 'HS256' || !is_array($payload)) return false;
+        if (!isset($payload['sub'], $payload['exp'], $payload['iss']) || !is_numeric($payload['sub']) || $payload['exp'] <= time() || $payload['iss'] !== 'stock-pulse') return false;
+        $expected = $this->base64UrlEncode(hash_hmac('sha256', $headerPart . '.' . $payloadPart, $this->secret(), true));
+        return hash_equals($expected, $signaturePart);
+    }
 
-        list($headerEncoded, $payloadEncoded, $signatureEncoded) = $tokenParts;
-        $payload = json_decode(base64_decode(str_replace(['-', '_'], ['+', '/'], $payloadEncoded)), true);
+    public function authenticatedUserId() {
+        $header = $_SERVER['HTTP_AUTHORIZATION'] ?? '';
+        if (!preg_match('/^Bearer\s+(.+)$/i', $header, $matches) || !$this->validateToken($matches[1])) return false;
+        $payload = json_decode($this->base64UrlDecode(explode('.', $matches[1])[1]), true);
+        return (int) $payload['sub'];
+    }
 
-        // Check if the token is expired
-        if ($payload['exp'] < time()) {
-            return false; // Token expired
-        }
+    private function base64UrlEncode($value) {
+        return rtrim(strtr(base64_encode($value), '+/', '-_'), '=');
+    }
 
-        // Validate the signature
-        $expectedSignature = hash_hmac('sha256', $headerEncoded . "." . $payloadEncoded, $this->secretKey, true);
-        $expectedSignatureEncoded = str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($expectedSignature));
-
-        return $signatureEncoded === $expectedSignatureEncoded;
+    private function base64UrlDecode($value) {
+        $decoded = base64_decode(strtr($value, '-_', '+/') . str_repeat('=', (4 - strlen($value) % 4) % 4), true);
+        return $decoded === false ? '' : $decoded;
     }
 }
-?>

@@ -1,6 +1,10 @@
 # README.md
 
+![Logo EPITA](./epita_logo.png)
+
 # Portfolio of M'Fabdel-Aziz (Abdel-Aziz) DIANÉ
+
+[Télécharger mon CV](./CV%20M%27Fabdel-Aziz%20DIAN%C3%89%20-%20Candidature%20EPITA.pdf) · [Télécharger ma lettre de motivation](./Lettre%20de%20Motivation%20M%27Fabdel-Aziz%20DIAN%C3%89%20-%20Candidature%20EPITA.pdf)
 
 Welcome to my technical portfolio repository! This project serves as an official demonstration of my skills and projects as I apply for the Engineering Cycle at EPITA, majoring in Web Development and New Applications (DWNA) starting September 2027.
 
@@ -24,6 +28,10 @@ This portfolio showcases my journey as a student in the field of Information Tec
 3. **CollabBoard**: An interactive Agile retrospective tool that employs HTML5 Drag & Drop, allowing users to manage tasks and vote on items.
 
 Each project is located in the `/projects` directory, with its own documentation and setup instructions.
+
+- [ChronosDesk interactive demo](./index.html#projects) (simulation client-side, no PHP server required)
+- [StockPulse demo](./projects/stock-pulse/client/index.html)
+- [CollabBoard demo](./projects/collab-board/public/index.html)
 
 ## Technical Skills
 

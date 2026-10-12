@@ -1,35 +1,58 @@
 <?php
-// index.php - Main entry point for the ChronosDesk application
-
-// Autoload classes
-spl_autoload_register(function ($class_name) {
-    include '../app/Models/' . $class_name . '.php';
-});
-
-// Start session
+session_set_cookie_params(['httponly' => true, 'secure' => !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off', 'samesite' => 'Lax']);
 session_start();
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
 
-// Include controllers
-require_once '../app/Controllers/AuthController.php';
-require_once '../app/Controllers/TicketController.php';
+require_once __DIR__ . '/../app/Models/Database.php';
+require_once __DIR__ . '/../app/Models/Ticket.php';
+require_once __DIR__ . '/../app/Controllers/AuthController.php';
+require_once __DIR__ . '/../app/Controllers/TicketController.php';
 
-// Initialize controllers
-$authController = new AuthController();
-$ticketController = new TicketController();
+$route = (string) ($_GET['route'] ?? 'dashboard');
+try {
+    $database = (new Database())->getConnection();
+} catch (Throwable $exception) {
+    http_response_code(503);
+    exit('ChronosDesk est temporairement indisponible.');
+}
+$authController = new AuthController($database);
+$ticketController = new TicketController($database);
 
-// Routing logic
-$requestUri = $_SERVER['REQUEST_URI'];
+if ($route === 'login') {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $validToken = hash_equals($_SESSION['csrf_token'], (string) ($_POST['csrf_token'] ?? ''));
+        $user = $validToken ? $authController->login($_POST['username'] ?? '', $_POST['password'] ?? '') : false;
+        if ($user) {
+            session_regenerate_id(true);
+            $_SESSION['user'] = $user;
+            header('Location: ?route=dashboard');
+            exit;
+        }
+        http_response_code(401);
+        $loginError = 'Identifiants invalides ou formulaire expiré.';
+    }
+    $csrfToken = htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+    $errorMessage = htmlspecialchars($loginError ?? '', ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+    echo '<!doctype html><html lang="fr"><meta charset="utf-8"><title>Connexion ChronosDesk</title><h1>Connexion</h1><p role="alert">' . $errorMessage . '</p><form method="post"><input type="hidden" name="csrf_token" value="' . $csrfToken . '"><label>Identifiant <input name="username" required maxlength="50" autocomplete="username"></label><label>Mot de passe <input type="password" name="password" required autocomplete="current-password"></label><button type="submit">Se connecter</button></form></html>';
+    exit;
+}
 
-if (strpos($requestUri, '/login') !== false) {
-    $authController->login();
-} elseif (strpos($requestUri, '/logout') !== false) {
-    $authController->logout();
-} elseif (strpos($requestUri, '/tickets') !== false) {
-    $ticketController->index();
-} elseif (strpos($requestUri, '/ticket/') !== false) {
-    $ticketController->show(substr($requestUri, strrpos($requestUri, '/') + 1));
+if ($route === 'logout') {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && hash_equals($_SESSION['csrf_token'], (string) ($_POST['csrf_token'] ?? ''))) {
+        $authController->logout();
+    }
+    header('Location: ?route=login');
+    exit;
+}
+
+if ($route === 'create-ticket') {
+    $ticketController->create();
+} elseif (preg_match('/^ticket\/(\d+)\/status$/', $route, $matches)) {
+    $ticketController->update($matches[1]);
+} elseif (preg_match('/^ticket\/(\d+)$/', $route, $matches)) {
+    $ticketController->show($matches[1]);
 } else {
-    // Default to dashboard
     $ticketController->index();
 }
-?>

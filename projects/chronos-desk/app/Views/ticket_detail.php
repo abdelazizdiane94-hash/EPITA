@@ -1,53 +1,27 @@
+<?php $escape = static function ($value) { return htmlspecialchars((string) $value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'); }; ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Détails du Ticket</title>
-    <link rel="stylesheet" href="../public/css/app.css">
+    <link rel="stylesheet" href="css/app.css">
 </head>
 <body>
     <div class="container">
-        <h1>Détails du Ticket</h1>
-        <div id="ticket-details">
-            <!-- Les détails du ticket seront chargés ici via JavaScript -->
-        </div>
-        <button id="back-button">Retour à la liste des tickets</button>
+        <h1>Détails du Ticket #<?= (int) $ticket['id'] ?></h1>
+        <h2><?= $escape($ticket['title']) ?></h2>
+        <p><?= nl2br($escape($ticket['description'])) ?></p>
+        <p>Statut : <?= $escape($ticket['status']) ?></p>
+        <p>Créé par <?= $escape($ticket['username']) ?> le <?= $escape($ticket['created_at']) ?></p>
+        <?php if (in_array($_SESSION['user']['role'], ['Technicien', 'Admin'], true)): ?>
+        <form method="post" action="?route=ticket/<?= (int) $ticket['id'] ?>/status">
+            <input type="hidden" name="csrf_token" value="<?= $escape($_SESSION['csrf_token']) ?>">
+            <label>Statut <select name="status"><option value="open">Ouvert</option><option value="in_progress">En cours</option><option value="closed">Fermé</option></select></label>
+            <button type="submit">Mettre à jour</button>
+        </form>
+        <?php endif; ?>
+        <a href="?route=dashboard">Retour à la liste des tickets</a>
     </div>
-
-    <script src="../public/js/async_chat.js"></script>
-    <script>
-        // Fonction pour charger les détails du ticket
-        function loadTicketDetails(ticketId) {
-            fetch(`../api/tickets/${ticketId}`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        const ticket = data.ticket;
-                        document.getElementById('ticket-details').innerHTML = `
-                            <h2>${ticket.title}</h2>
-                            <p><strong>Description:</strong> ${ticket.description}</p>
-                            <p><strong>Statut:</strong> ${ticket.status}</p>
-                            <p><strong>Créé par:</strong> ${ticket.created_by}</p>
-                            <p><strong>Date de création:</strong> ${new Date(ticket.created_at).toLocaleString()}</p>
-                        `;
-                    } else {
-                        document.getElementById('ticket-details').innerHTML = '<p>Erreur lors du chargement des détails du ticket.</p>';
-                    }
-                })
-                .catch(error => {
-                    console.error('Erreur:', error);
-                    document.getElementById('ticket-details').innerHTML = '<p>Erreur lors du chargement des détails du ticket.</p>';
-                });
-        }
-
-        // Événement pour le bouton de retour
-        document.getElementById('back-button').addEventListener('click', () => {
-            window.location.href = '../public/index.php'; // Redirige vers la liste des tickets
-        });
-
-        // Charger les détails du ticket avec un ID fictif pour la démonstration
-        loadTicketDetails(1);
-    </script>
 </body>
 </html>

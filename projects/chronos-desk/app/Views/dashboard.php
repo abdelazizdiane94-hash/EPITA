@@ -1,31 +1,38 @@
+<?php $escape = static function ($value) { return htmlspecialchars((string) $value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'); }; ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - ChronosDesk</title>
-    <link rel="stylesheet" href="../public/css/app.css">
+    <link rel="stylesheet" href="css/app.css">
 </head>
 <body>
     <header>
         <h1>Tableau de Bord - ChronosDesk</h1>
+        <p>Connecté : <?= $escape($user['username']) ?> (<?= $escape($user['role']) ?>)</p>
+        <form method="post" action="?route=logout"><input type="hidden" name="csrf_token" value="<?= $escape($_SESSION['csrf_token']) ?>"><button type="submit">Déconnexion</button></form>
     </header>
     <main>
         <section id="user-stats">
             <h2>Statistiques Utilisateur</h2>
             <div id="user-info">
-                <!-- Informations sur l'utilisateur connecté -->
-                <p>Nom: <span id="user-name"></span></p>
-                <p>Rôle: <span id="user-role"></span></p>
+                <p>Nom: <span id="user-name"><?= $escape($user['username']) ?></span></p>
+                <p>Rôle: <span id="user-role"><?= $escape($user['role']) ?></span></p>
             </div>
         </section>
         <section id="ticket-stats">
             <h2>Statistiques des Tickets</h2>
-            <div id="ticket-summary">
-                <p>Tickets Ouverts: <span id="open-tickets"></span></p>
-                <p>Tickets Fermés: <span id="closed-tickets"></span></p>
-                <p>Tickets en Attente: <span id="pending-tickets"></span></p>
-            </div>
+            <div id="ticket-summary"><p>Tickets affichés: <?= count($tickets) ?></p></div>
+        </section>
+        <section>
+            <h2>Créer un ticket</h2>
+            <form method="post" action="?route=create-ticket">
+                <input type="hidden" name="csrf_token" value="<?= $escape($_SESSION['csrf_token']) ?>">
+                <label>Sujet <input name="title" maxlength="255" required></label>
+                <label>Description <textarea name="description" maxlength="10000" required></textarea></label>
+                <button type="submit">Créer</button>
+            </form>
         </section>
         <section id="recent-tickets">
             <h2>Tickets Récents</h2>
@@ -35,41 +42,16 @@
                         <th>ID</th>
                         <th>Sujet</th>
                         <th>Statut</th>
-                        <th>Date de Création</th>
+                            <th>Date de Création</th>
                     </tr>
                 </thead>
                 <tbody id="ticket-list">
-                    <!-- Liste des tickets récents -->
+                    <?php foreach ($tickets as $ticket): ?>
+                    <tr><td><a href="?route=ticket/<?= (int) $ticket['id'] ?>"><?= (int) $ticket['id'] ?></a></td><td><?= $escape($ticket['title']) ?></td><td><?= $escape($ticket['status']) ?></td><td><?= $escape($ticket['created_at']) ?></td></tr>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
         </section>
     </main>
-    <script src="../public/js/async_chat.js"></script>
-    <script src="../public/js/sla_timer.js"></script>
-    <script>
-        // Logique pour récupérer et afficher les statistiques des utilisateurs et des tickets
-        document.addEventListener('DOMContentLoaded', function() {
-            // Simulation de données pour le tableau de bord
-            document.getElementById('user-name').textContent = 'Abdel-Aziz DIANÉ';
-            document.getElementById('user-role').textContent = 'Technicien';
-            document.getElementById('open-tickets').textContent = '5';
-            document.getElementById('closed-tickets').textContent = '10';
-            document.getElementById('pending-tickets').textContent = '2';
-
-            // Ajout de tickets récents
-            const tickets = [
-                { id: 1, subject: 'Problème de connexion', status: 'Ouvert', created_at: '2023-10-01' },
-                { id: 2, subject: 'Erreur de serveur', status: 'Fermé', created_at: '2023-09-30' },
-                { id: 3, subject: 'Demande de fonctionnalité', status: 'En Attente', created_at: '2023-10-02' }
-            ];
-
-            const ticketList = document.getElementById('ticket-list');
-            tickets.forEach(ticket => {
-                const row = document.createElement('tr');
-                row.innerHTML = `<td>${ticket.id}</td><td>${ticket.subject}</td><td>${ticket.status}</td><td>${ticket.created_at}</td>`;
-                ticketList.appendChild(row);
-            });
-        });
-    </script>
 </body>
 </html>

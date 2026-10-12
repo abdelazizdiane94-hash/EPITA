@@ -1,22 +1,22 @@
 <?php
 class Database {
-    private $host = 'localhost';
-    private $db_name = 'chronos_desk';
-    private $username = 'root';
-    private $password = '';
-    public $conn;
+    private $conn;
 
-    // Méthode pour établir la connexion à la base de données
     public function getConnection() {
-        $this->conn = null;
-
-        try {
-            $this->conn = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->db_name, $this->username, $this->password);
-            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        } catch(PDOException $exception) {
-            echo "Erreur de connexion : " . $exception->getMessage();
+        if ($this->conn instanceof PDO) {
+            return $this->conn;
         }
 
+        $host = getenv('CHRONOS_DB_HOST') ?: '127.0.0.1';
+        $name = getenv('CHRONOS_DB_NAME') ?: 'chronos_desk';
+        $user = getenv('CHRONOS_DB_USER') ?: 'root';
+        $password = getenv('CHRONOS_DB_PASSWORD') ?: '';
+        $this->conn = new PDO(
+            "mysql:host={$host};dbname={$name};charset=utf8mb4",
+            $user,
+            $password,
+            [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, PDO::ATTR_EMULATE_PREPARES => false]
+        );
         return $this->conn;
     }
 }

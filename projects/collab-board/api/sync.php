@@ -1,45 +1,61 @@
 <?php
-// sync.php
-// Ce fichier gère la synchronisation des états du tableau avec la base de données.
+header('Content-Type: application/json; charset=utf-8');
+header('X-Content-Type-Options: nosniff');
+require_once __DIR__ . '/JwtAuth.php';
 
-// Inclusion du fichier de configuration de la base de données
-require_once '../config/db.php';
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    header('Allow: POST');
+    http_response_code(405);
+    echo json_encode(['error' => 'Method not allowed.']);
+    exit;
+}
 
-// Fonction pour synchroniser l'état du tableau
-function syncBoardState($boardData) {
-    global $pdo;
-
-    // Suppression des anciennes entrées
-    $stmt = $pdo->prepare("DELETE FROM cards");
-    $stmt->execute();
-
-    // Insertion des nouvelles entrées
-    foreach ($boardData as $card) {
-        $stmt = $pdo->prepare("INSERT INTO cards (id, title, description, status) VALUES (:id, :title, :description, :status)");
-        $stmt->bindParam(':id', $card['id']);
-        $stmt->bindParam(':title', $card['title']);
-        $stmt->bindParam(':description', $card['description']);
-        $stmt->bindParam(':status', $card['status']);
-        $stmt->execute();
+try {
+    if (!(new BoardJwtAuth())->isAuthorized($_SERVER['HTTP_AUTHORIZATION'] ?? '')) {
+        http_response_code(401);
+        echo json_encode(['error' => 'Valid bearer token required.']);
+        exit;
     }
 
-    return ['status' => 'success', 'message' => 'Board state synchronized successfully.'];
+    require __DIR__ . '/config/db.php';
+    $payload = json_decode(file_get_contents('php://input'), true);
+    $sprintId = filter_var($payload['sprint_id'] ?? null, FILTER_VALIDATE_INT);
+    $cards = $payload['cards'] ?? null;
+    if (!$sprintId || !is_array($cards) || count($cards) > 500) {
+        http_response_code(422);
+        echo json_encode(['error' => 'A sprint id and up to 500 cards are required.']);
+        exit;
+    }
+
+    foreach ($cards as $card) {
+        if (!is_array($card) || !isset($card['title'], $card['status']) || !is_string($card['title']) || trim($card['title']) === '' || strlen($card['title']) > 255 || !in_array($card['status'], ['start', 'stop', 'continue'], true) || !is_int($card['position'] ?? null) || strlen((string) ($card['description'] ?? '')) > 10000) {
+            http_response_code(422);
+            echo json_encode(['error' => 'One or more cards are invalid.']);
+            exit;
+        }
+    }
+
+    $pdo->beginTransaction();
+    try {
+        $delete = $pdo->prepare('DELETE FROM cards WHERE sprint_id = :sprint_id');
+        $delete->execute([':sprint_id' => $sprintId]);
+        $insert = $pdo->prepare('INSERT INTO cards (sprint_id, title, description, status, position) VALUES (:sprint_id, :title, :description, :status, :position)');
+        foreach ($cards as $card) {
+            $insert->execute([
+                ':sprint_id' => $sprintId,
+                ':title' => trim($card['title']),
+                ':description' => trim((string) ($card['description'] ?? '')),
+                ':status' => $card['status'],
+                ':position' => $card['position']
+            ]);
+        }
+        $pdo->commit();
+    } catch (Throwable $exception) {
+        if ($pdo->inTransaction()) $pdo->rollBack();
+        throw $exception;
+    }
+    echo json_encode(['status' => 'success', 'cards_saved' => count($cards)]);
+} catch (Throwable $exception) {
+    http_response_code(500);
+    echo json_encode(['error' => 'The board could not be synchronized.']);
 }
-
-// Vérification de la méthode de requête
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Récupération des données du tableau depuis la requête
-    $boardData = json_decode(file_get_contents('php://input'), true);
-
-    // Appel de la fonction de synchronisation
-    $response = syncBoardState($boardData);
-
-    // Retourner la réponse en JSON
-    header('Content-Type: application/json');
-    echo json_encode($response);
-} else {
-    // Méthode non autorisée
-    http_response_code(405);
-    echo json_encode(['status' => 'error', 'message' => 'Method not allowed.']);
-}
-?>

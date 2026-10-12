@@ -16,8 +16,17 @@
     <main>
         <section id="inventory">
             <h2>Inventaire</h2>
-            <canvas id="stockChart"></canvas>
-            <div id="inventoryList"></div>
+            <div class="chart-container"><canvas id="stockChart"></canvas></div>
+            <div class="stock-controls">
+                <label for="product-select">Produit</label>
+                <select id="product-select"></select>
+                <label for="movement-quantity">Quantité</label>
+                <input id="movement-quantity" type="number" min="1" value="5">
+                <button id="stock-in" type="button">Entrée de stock</button>
+                <button id="stock-out" type="button">Sortie de stock</button>
+            </div>
+            <p id="stock-status" role="status">Données de démonstration chargées.</p>
+            <ul id="inventoryList"></ul>
         </section>
     </main>
     <footer>

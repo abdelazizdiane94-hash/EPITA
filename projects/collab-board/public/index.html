@@ -15,23 +15,24 @@
     <main>
         <section id="board">
             <h2>Tableau de Rétrospective</h2>
-            <div class="column" id="start-column">
+            <div class="column" id="start-column" data-type="start">
                 <h3>Start</h3>
                 <div class="card-container" data-type="start"></div>
                 <button onclick="addCard('start')">Ajouter une carte</button>
             </div>
-            <div class="column" id="stop-column">
+            <div class="column" id="stop-column" data-type="stop">
                 <h3>Stop</h3>
                 <div class="card-container" data-type="stop"></div>
                 <button onclick="addCard('stop')">Ajouter une carte</button>
             </div>
-            <div class="column" id="continue-column">
+            <div class="column" id="continue-column" data-type="continue">
                 <h3>Continue</h3>
                 <div class="card-container" data-type="continue"></div>
                 <button onclick="addCard('continue')">Ajouter une carte</button>
             </div>
         </section>
-        <button id="export-button">Exporter en Markdown/PDF</button>
+        <button id="export-button" class="export-button" type="button">Télécharger le rapport Markdown</button>
+        <p id="vote-status" role="status">Votes utilisés : 0/5</p>
     </main>
     <footer>
         <p>&copy; 2023 M'Fabdel-Aziz (Abdel-Aziz) DIANÉ</p>

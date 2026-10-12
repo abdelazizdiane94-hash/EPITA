@@ -6,11 +6,18 @@ CREATE TABLE sprints (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(80) NOT NULL UNIQUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 CREATE TABLE cards (
     id INT AUTO_INCREMENT PRIMARY KEY,
     sprint_id INT NOT NULL,
     title VARCHAR(255) NOT NULL,
     description TEXT,
+    status ENUM('start', 'stop', 'continue') NOT NULL,
     position INT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (sprint_id) REFERENCES sprints(id) ON DELETE CASCADE
@@ -21,5 +28,6 @@ CREATE TABLE votes (
     card_id INT NOT NULL,
     user_id INT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (card_id) REFERENCES cards(id) ON DELETE CASCADE
+    FOREIGN KEY (card_id) REFERENCES cards(id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );

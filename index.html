@@ -4,19 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portfolio de M'Fabdel-Aziz (Abdel-Aziz) DIANÉ</title>
+    <link rel="icon" href="./epita_logo.png">
     <link rel="stylesheet" href="assets/css/style.css">
     <script src="assets/js/main.js" defer></script>
 </head>
 <body>
+    <nav class="site-nav" aria-label="Navigation principale">
+        <a href="#home" class="brand"><img src="./epita_logo.png" alt="EPITA"> <span>Portfolio EPITA</span></a>
+        <a href="#projects">Projets</a>
+    </nav>
     <header>
-        <section class="hero">
+        <section class="hero" id="home">
+            <img class="hero-logo" src="./epita_logo.png" alt="Logo EPITA">
             <h1>M'Fabdel-Aziz (Abdel-Aziz) DIANÉ</h1>
             <h2>Étudiant en 2ème année de BTS SIO option SLAM (Lycée Parc de Vilgénis, Massy, 2025-2027) | Candidat au Cycle Ingénieur EPITA en Apprentissage — Majeure DWNA (Septembre 2027).</h2>
             <p>Coordonnées : 7 rue Louis Aragon, 94310 Orly | 07 67 46 83 18 | abdelaziz.diane94@gmail.com | <a href="https://github.com/abdelazizdiane94-hash/EPITA">Lien GitHub</a>.</p>
             <div class="action-buttons">
-                <button onclick="scrollToProjects()">Explorer les 3 Projets</button>
-                <button onclick="downloadCV()">Télécharger mon CV</button>
-                <button onclick="readMotivationLetter()">Lire ma Lettre de Motivation</button>
+                <a class="button" href="#projects">Explorer les 3 Projets</a>
+                <a class="button" href="./CV%20M%27Fabdel-Aziz%20DIAN%C3%89%20-%20Candidature%20EPITA.pdf" download>Télécharger mon CV</a>
+                <a class="button" href="./Lettre%20de%20Motivation%20M%27Fabdel-Aziz%20DIAN%C3%89%20-%20Candidature%20EPITA.pdf" download>Télécharger ma Lettre de Motivation</a>
             </div>
         </section>
     </header>
@@ -34,23 +40,23 @@
 
         <section class="projects" id="projects">
             <h3>Vitrine des Projets Web</h3>
-            <div class="project-card" onclick="openModal('chronos-desk')">
+            <div class="project-card">
                 <h4>ChronosDesk</h4>
                 <p>Application métier en architecture MVC gérant le suivi d'incidents (Helpdesk).</p>
-                <button onclick="viewSource('projects/chronos-desk')">Voir le Code Source sur GitHub</button>
-                <button onclick="launchDemo('chronos-desk')">Lancer la Démo Interactive</button>
+                <button type="button" data-demo="chronos-desk">Lancer la Démo Interactive</button>
+                <a class="button" href="projects/chronos-desk/README.md">Voir le Code Source</a>
             </div>
-            <div class="project-card" onclick="openModal('stock-pulse')">
+            <div class="project-card">
                 <h4>StockPulse</h4>
                 <p>Solution d'inventaire découplée reposant sur une API REST sécurisée par JWT.</p>
-                <button onclick="viewSource('projects/stock-pulse')">Voir le Code Source sur GitHub</button>
-                <button onclick="launchDemo('stock-pulse')">Lancer la Démo Interactive</button>
+                <a class="button" href="projects/stock-pulse/client/index.html">Ouvrir la Démo Interactive</a>
+                <a class="button" href="projects/stock-pulse/README.md">Voir le Code Source</a>
             </div>
-            <div class="project-card" onclick="openModal('collab-board')">
+            <div class="project-card">
                 <h4>CollabBoard</h4>
                 <p>Outil interactif de rétrospective Agile avec Drag & Drop.</p>
-                <button onclick="viewSource('projects/collab-board')">Voir le Code Source sur GitHub</button>
-                <button onclick="launchDemo('collab-board')">Lancer la Démo Interactive</button>
+                <a class="button" href="projects/collab-board/public/index.html">Ouvrir la Démo Interactive</a>
+                <a class="button" href="projects/collab-board/README.md">Voir le Code Source</a>
             </div>
         </section>
 

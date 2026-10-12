@@ -2,56 +2,46 @@
 class AuthController {
     private $db;
 
-    public function __construct($database) {
+    public function __construct(PDO $database) {
         $this->db = $database;
     }
 
-    // Fonction pour enregistrer un nouvel utilisateur
     public function register($username, $password) {
-        // Hachage du mot de passe
+        $username = trim((string) $username);
+        if ($username === '' || strlen($username) > 50 || strlen((string) $password) < 12) {
+            return false;
+        }
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-        
-        // Préparation de la requête d'insertion
-        $query = "INSERT INTO users (username, password) VALUES (:username, :password)";
-        $stmt = $this->db->prepare($query);
-        
-        // Liaison des paramètres
-        $stmt->bindParam(':username', $username);
-        $stmt->bindParam(':password', $hashedPassword);
-        
-        // Exécution de la requête
-        if ($stmt->execute()) {
-            return true; // Enregistrement réussi
+
+        try {
+            $stmt = $this->db->prepare('INSERT INTO users (username, password, email, role_id) VALUES (:username, :password, :email, (SELECT id FROM roles WHERE role_name = :role))');
+            return $stmt->execute([
+                ':username' => $username,
+                ':password' => $hashedPassword,
+                ':email' => strtolower($username) . '@example.invalid',
+                ':role' => 'Collaborateur'
+            ]);
+        } catch (PDOException $exception) {
+            return false;
         }
-        return false; // Échec de l'enregistrement
     }
 
-    // Fonction pour connecter un utilisateur
     public function login($username, $password) {
-        // Préparation de la requête de sélection
-        $query = "SELECT * FROM users WHERE username = :username";
-        $stmt = $this->db->prepare($query);
-        $stmt->bindParam(':username', $username);
-        $stmt->execute();
-        
-        // Vérification de l'utilisateur
-        if ($stmt->rowCount() > 0) {
-            $user = $stmt->fetch(PDO::FETCH_ASSOC);
-            // Vérification du mot de passe
-            if (password_verify($password, $user['password'])) {
-                // Authentification réussie
-                return $user; // Retourne les informations de l'utilisateur
-            }
+        $stmt = $this->db->prepare('SELECT users.id, users.username, users.password, roles.role_name AS role FROM users JOIN roles ON roles.id = users.role_id WHERE users.username = :username LIMIT 1');
+        $stmt->execute([':username' => trim((string) $username)]);
+        $user = $stmt->fetch();
+        if ($user && password_verify((string) $password, $user['password'])) {
+            unset($user['password']);
+            return $user;
         }
-        return false; // Échec de la connexion
+        return false;
     }
 
-    // Fonction pour déconnecter un utilisateur
     public function logout() {
-        // Détruire la session de l'utilisateur
-        session_start();
+        if (session_status() !== PHP_SESSION_ACTIVE) {
+            session_start();
+        }
         session_unset();
         session_destroy();
     }
 }
-?>

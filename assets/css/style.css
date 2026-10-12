@@ -111,3 +111,24 @@ body {
         width: 90%;
     }
 }
+
+.site-nav { display: flex; align-items: center; justify-content: space-between; padding: 10px 24px; background: #202a30; }
+.site-nav a { color: #fff; text-decoration: none; }
+.site-nav .brand { display: flex; align-items: center; gap: 10px; font-weight: bold; }
+.site-nav img { width: 36px; height: 36px; object-fit: contain; }
+.hero-logo { width: 96px; height: 96px; object-fit: contain; }
+.action-buttons { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px; }
+.project-card button, .button, .chronos-demo button { display: inline-block; margin: 5px 4px 5px 0; padding: 10px 14px; background: #167d82; color: #fff; border: 0; border-radius: 4px; text-decoration: none; cursor: pointer; }
+.project-card button:hover, .button:hover, .chronos-demo button:hover { background: #116166; }
+.modal-content { position: relative; max-width: 720px; width: calc(100% - 40px); margin: 4vh auto; padding: 24px; box-sizing: border-box; color: #172126; border-radius: 6px; }
+.modal-close { position: absolute; right: 12px; top: 12px; font-size: 24px; }
+.chronos-demo label { display: block; margin-top: 12px; font-weight: bold; }
+.chronos-demo input, .chronos-demo select { box-sizing: border-box; max-width: 100%; min-height: 40px; padding: 8px; }
+.chronos-demo form { display: flex; flex-wrap: wrap; gap: 8px; align-items: end; }
+.chronos-demo #chat-messages { max-height: 120px; overflow: auto; padding: 8px; background: #edf1f1; }
+.chronos-demo #demo-tickets { max-height: 130px; overflow: auto; }
+
+@media (max-width: 600px) {
+    .site-nav { padding: 8px 12px; }
+    .modal-content { margin: 2vh auto; max-height: 96vh; overflow: auto; }
+}
