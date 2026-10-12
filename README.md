@@ -1,63 +1,49 @@
-# README.md
+# 🎓 Portfolio de Candidature — EPITA DWNA (Septembre 2027)
 
-![Logo EPITA](./epita_logo.png)
+**Candidat :** M'Fabdel-Aziz (Abdel-Aziz) DIANÉ  
+**Formation actuelle :** 2ème année de BTS SIO option SLAM (Lycée Parc de Vilgénis)  
+**Objectif :** Intégrer le cycle ingénieur en apprentissage à l'EPITA (Majeure Développement Web et Nouvelles Applications).
 
-# Portfolio of M'Fabdel-Aziz (Abdel-Aziz) DIANÉ
+🌐 **[Découvrir le Portail Web & Les Démos Interactives](https://abdelazizdiane94-hash.github.io/EPITA/)**
 
-[Télécharger mon CV](./CV%20M%27Fabdel-Aziz%20DIAN%C3%89%20-%20Candidature%20EPITA.pdf) · [Télécharger ma lettre de motivation](./Lettre%20de%20Motivation%20M%27Fabdel-Aziz%20DIAN%C3%89%20-%20Candidature%20EPITA.pdf)
+Ce dépôt regroupe l'intégralité de mon dossier technique. Il a été pensé pour démontrer ma capacité à concevoir des architectures logicielles propres, à séparer les couches applicatives et à documenter mon code de manière professionnelle.
 
-Welcome to my technical portfolio repository! This project serves as an official demonstration of my skills and projects as I apply for the Engineering Cycle at EPITA, majoring in Web Development and New Applications (DWNA) starting September 2027.
+---
 
-## Table of Contents
+## 🚀 Projets Personnels (Architectures Avancées)
 
-- [Introduction](#introduction)
-- [Projects](#projects)
-- [Technical Skills](#technical-skills)
-- [Experiences](#experiences)
-- [Soft Skills](#soft-skills)
-- [Contact Information](#contact-information)
+Ces trois projets ont été développés spécifiquement pour illustrer ma maîtrise des concepts modernes de développement web (MVC, API REST, asynchronisme) au-delà du programme classique du BTS.
 
-## Introduction
+* **[ChronosDesk](./projects/chronos-desk/README.md) — (PHP 8 MVC / MySQL / JS)**
+  Application métier de type Helpdesk. Mise en place d'une architecture MVC orientée objet from scratch, calcul dynamique de SLA en temps réel, messagerie asynchrone (Fetch API) et contrôle d'accès par rôles (RBAC).
+* **[StockPulse](./projects/stock-pulse/README.md) — (API REST / JWT / Chart.js)**
+  Solution de gestion d'inventaire démontrant la séparation stricte entre le Front-end (Client JS) et le Back-end (API REST PHP). Sécurisation des routes par JSON Web Tokens (JWT) et implémentation de transactions SQL (Commit/Rollback).
+* **[CollabBoard](./projects/collab-board/README.md) — (JavaScript ES6+ / Drag & Drop / Export)**
+  Outil interactif de rétrospective Agile (Start/Stop/Continue). Manipulation avancée du DOM, gestion de la persistance des données, système de vote bridé (Dot-voting) et génération de rapports téléchargeables au format Markdown.
 
-This portfolio showcases my journey as a student in the field of Information Technology, particularly focusing on web development. It includes various projects that highlight my skills in programming, database management, and application development.
+---
 
-## Projects
+## 🎓 Projet Académique (BTS SIO SLAM)
 
-1. **ChronosDesk**: A ticket management system built using PHP MVC architecture, MySQL, and JavaScript. It features real-time SLA tracking and asynchronous messaging.
-2. **StockPulse**: A secure REST API for inventory management, utilizing JWT for authentication and a dashboard for visualizing stock data with Chart.js.
-3. **CollabBoard**: An interactive Agile retrospective tool that employs HTML5 Drag & Drop, allowing users to manage tasks and vote on items.
+* **[Projet_ZOO (Zoo de Milo)](./Projet_ZOO/README.md) — (PHP Procédural / MySQL)**
+  Application web de gestion de parc zoologique réalisée en classe. Illustration parfaite des fondamentaux : gestion des sessions (`menu_directeur.php` vs `menu_employe.php`), requêtes SQL relationnelles et opérations CRUD (Create, Read, Update, Delete) sur les animaux, les espèces et les employés.
 
-Each project is located in the `/projects` directory, with its own documentation and setup instructions.
+---
 
-- [ChronosDesk interactive demo](./index.html#projects) (simulation client-side, no PHP server required)
-- [StockPulse demo](./projects/stock-pulse/client/index.html)
-- [CollabBoard demo](./projects/collab-board/public/index.html)
+## 🛡️ Standards de Qualité & Bonnes Pratiques
 
-## Technical Skills
+Ce dépôt respecte des standards stricts d'ingénierie logicielle :
+* **Documentation Systématique :** Chaque projet possède son propre fichier `README.md` détaillant le contexte, le schéma de base de données (MCD/MLD) et les instructions de déploiement.
+* **Code Structuré & Sécurisé :** Utilisation de PDO avec requêtes préparées pour contrer les injections SQL, protection XSS (`htmlspecialchars`), mots de passe hachés et architectures découpées.
+* **Diversité Technologique :** Maîtrise d'un spectre large allant du back-end (PHP 8, Python, Java) au front-end (JS ES6+, HTML5, CSS3) jusqu'à la modélisation de bases de données relationnelles (MySQL, PostgreSQL).
 
-- **Languages**: PHP, Java, HTML5, CSS3, JavaScript (ES6+), Python
-- **Databases**: SQL, MySQL, PostgreSQL
-- **Tools & Environments**: Visual Studio Code, AMPPS, Windows PowerShell, Git/GitHub
-- **Infrastructure**: Client workstation installation and maintenance, network setup
+---
 
-## Experiences
+## 📁 Documents Officiels
 
-- **Nov 2026 - Dec 2026**: Internship in IT Development (5 weeks)
-- **Jun 2026 - Jul 2026**: Web Development & Management Intern at Pangée ONG
-- **Nov 2024 - Dec 2024**: IT Intern at Mairie d'Orly
-- **Jun 2024**: Maintenance and Programming Intern at D8
-- **2022 - 2025**: Bac Pro in Digital Systems, option ARED
+Vous trouverez à la racine de ce dépôt les documents au format PDF complétant ma candidature :
+* [📄 Curriculum Vitae](./CV%20M'Fabdel-Aziz%20DIAN%C3%89%20-%20Candidature%20EPITA.pdf)
+* [✉️ Lettre de Motivation](./Lettre%20de%20Motivation%20M'Fabdel-Aziz%20DIAN%C3%89%20-%20Candidature%20EPITA.pdf)
 
-## Soft Skills
-
-- **Boxing**: 3 years of practice, demonstrating resilience, pressure management, discipline, and physical conditioning.
-- **Analytical Mindset**: Expertise in theorycrafting, complex statistical optimization in video games, and analytical reporting.
-
-## Contact Information
-
-- **Address**: 7 rue Louis Aragon, 94310 Orly
-- **Phone**: 07 67 46 83 18
-- **Email**: abdelaziz.diane94@gmail.com
-- **GitHub**: [github.com/abdelazizdiane94-hash/EPITA](https://github.com/abdelazizdiane94-hash/EPITA)
-
-Feel free to explore my projects and reach out for any inquiries!
+---
+*Dépôt maintenu par [Abdel-Aziz DIANÉ](https://github.com/abdelazizdiane94-hash) — 2026*

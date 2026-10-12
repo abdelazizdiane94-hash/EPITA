@@ -12,6 +12,7 @@
     <nav class="site-nav" aria-label="Navigation principale">
         <a href="#home" class="brand"><img src="./epita_logo.png" alt="EPITA"> <span>Portfolio EPITA</span></a>
         <a href="#projects">Projets</a>
+        <a href="#quality">Qualité</a>
     </nav>
     <header>
         <section class="hero" id="home">
@@ -20,7 +21,7 @@
             <h2>Étudiant en 2ème année de BTS SIO option SLAM (Lycée Parc de Vilgénis, Massy, 2025-2027) | Candidat au Cycle Ingénieur EPITA en Apprentissage — Majeure DWNA (Septembre 2027).</h2>
             <p>Coordonnées : 7 rue Louis Aragon, 94310 Orly | 07 67 46 83 18 | abdelaziz.diane94@gmail.com | <a href="https://github.com/abdelazizdiane94-hash/EPITA">Lien GitHub</a>.</p>
             <div class="action-buttons">
-                <a class="button" href="#projects">Explorer les 3 Projets</a>
+                <a class="button" href="#projects">Explorer les 4 Projets</a>
                 <a class="button" href="./CV%20M%27Fabdel-Aziz%20DIAN%C3%89%20-%20Candidature%20EPITA.pdf" download>Télécharger mon CV</a>
                 <a class="button" href="./Lettre%20de%20Motivation%20M%27Fabdel-Aziz%20DIAN%C3%89%20-%20Candidature%20EPITA.pdf" download>Télécharger ma Lettre de Motivation</a>
             </div>
@@ -40,24 +41,49 @@
 
         <section class="projects" id="projects">
             <h3>Vitrine des Projets Web</h3>
-            <div class="project-card">
+            <div class="project-filters" role="group" aria-label="Filtrer les réalisations">
+                <button type="button" class="filter-button is-active" data-filter="all" aria-pressed="true">Tous</button>
+                <button type="button" class="filter-button" data-filter="perso" aria-pressed="false">Projets Personnels</button>
+                <button type="button" class="filter-button" data-filter="academique" aria-pressed="false">Projets Académiques &amp; TP</button>
+                <button type="button" class="filter-button" data-filter="outils" aria-pressed="false">Open Source &amp; Outils</button>
+            </div>
+            <div class="project-card" data-category="perso">
                 <h4>ChronosDesk</h4>
                 <p>Application métier en architecture MVC gérant le suivi d'incidents (Helpdesk).</p>
                 <button type="button" data-demo="chronos-desk">Lancer la Démo Interactive</button>
                 <a class="button" href="projects/chronos-desk/README.md">Voir le Code Source</a>
             </div>
-            <div class="project-card">
+            <div class="project-card" data-category="perso">
                 <h4>StockPulse</h4>
                 <p>Solution d'inventaire découplée reposant sur une API REST sécurisée par JWT.</p>
                 <a class="button" href="projects/stock-pulse/client/index.html">Ouvrir la Démo Interactive</a>
                 <a class="button" href="projects/stock-pulse/README.md">Voir le Code Source</a>
             </div>
-            <div class="project-card">
+            <div class="project-card" data-category="perso">
                 <h4>CollabBoard</h4>
                 <p>Outil interactif de rétrospective Agile avec Drag & Drop.</p>
                 <a class="button" href="projects/collab-board/public/index.html">Ouvrir la Démo Interactive</a>
                 <a class="button" href="projects/collab-board/README.md">Voir le Code Source</a>
             </div>
+            <div class="project-card academic-project" data-category="academique">
+                <h4>Projet_ZOO | Zoo de Milo</h4>
+                <p>Travail académique de BTS SIO SLAM : sessions PHP, rôles de menu et gestion de données relationnelles pour un parc zoologique.</p>
+                <button type="button" data-demo="zoo">Lancer la Démo Interactive</button>
+                <a class="button" href="Projet_ZOO/README.md">Documentation du projet</a>
+                <a class="button" href="Projet_ZOO/gestionzoo.sql">Schéma SQL</a>
+            </div>
+            <div class="project-card resource-project" data-category="outils">
+                <h4>Open Source &amp; Outils</h4>
+                <p>Documentation et sources des projets du portfolio, avec les scripts SQL et les démonstrations statiques.</p>
+                <a class="button" href="README.md">Documentation du portfolio</a>
+                <a class="button" href="https://github.com/abdelazizdiane94-hash/EPITA" target="_blank" rel="noopener">Dépôt GitHub</a>
+            </div>
+        </section>
+
+        <section class="quality" id="quality">
+            <h3>Qualité &amp; Documentation</h3>
+            <p>Chaque projet dispose d'une documentation dédiée. Les démonstrations navigateur utilisent des données locales; les applications PHP nécessitent AMPPS et MySQL.</p>
+            <a class="button" href="Projet_ZOO/README.md">Guide technique de Projet_ZOO</a>
         </section>
 
         <section class="experience">

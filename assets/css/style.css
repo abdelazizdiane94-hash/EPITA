@@ -125,10 +125,29 @@ body {
 .chronos-demo label { display: block; margin-top: 12px; font-weight: bold; }
 .chronos-demo input, .chronos-demo select { box-sizing: border-box; max-width: 100%; min-height: 40px; padding: 8px; }
 .chronos-demo form { display: flex; flex-wrap: wrap; gap: 8px; align-items: end; }
+.chronos-demo [hidden] { display: none !important; }
 .chronos-demo #chat-messages { max-height: 120px; overflow: auto; padding: 8px; background: #edf1f1; }
 .chronos-demo #demo-tickets { max-height: 130px; overflow: auto; }
+.project-filters { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; width: 100%; margin: 0 0 12px; }
+.filter-button { min-height: 38px; padding: 8px 13px; border: 1px solid #52616b; border-radius: 4px; background: #202a30; color: #fff; cursor: pointer; }
+.filter-button:hover, .filter-button.is-active { border-color: #167d82; background: #167d82; }
+.project-card.is-hidden { display: none; }
+.academic-project { border-top: 3px solid #e3b341; }
+.resource-project { border-top: 3px solid #42a5a0; }
+.quality { padding: 24px; text-align: center; background: #172126; }
+.quality p { max-width: 760px; margin: 0 auto 12px; }
+.zoo-toolbar { display: flex; flex-wrap: wrap; align-items: end; gap: 10px; margin: 18px 0; }
+.zoo-toolbar label { display: grid; gap: 4px; font-weight: bold; }
+.zoo-toolbar input, .zoo-toolbar select { min-height: 40px; max-width: 100%; padding: 8px; }
+.zoo-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.zoo-card { display: flex; min-width: 0; align-items: center; gap: 12px; padding: 10px; border: 1px solid #cbd3d6; border-radius: 4px; }
+.zoo-card img { width: 64px; height: 64px; flex: 0 0 auto; border-radius: 4px; object-fit: cover; }
+.zoo-card p { margin: 2px 0; overflow-wrap: anywhere; }
+.zoo-card .zoo-delete { margin-left: auto; }
+.zoo-empty { grid-column: 1 / -1; }
 
 @media (max-width: 600px) {
     .site-nav { padding: 8px 12px; }
     .modal-content { margin: 2vh auto; max-height: 96vh; overflow: auto; }
+    .zoo-grid { grid-template-columns: 1fr; }
 }
