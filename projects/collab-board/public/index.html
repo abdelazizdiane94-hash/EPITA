@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CollabBoard - Outil de Rétrospective Agile</title>
+    <link rel="stylesheet" href="board.css">
+    <script src="board.js" defer></script>
+</head>
+<body>
+    <header>
+        <h1>CollabBoard</h1>
+        <p>Outil interactif de rétrospective Agile pour les équipes.</p>
+    </header>
+    <main>
+        <section id="board">
+            <h2>Tableau de Rétrospective</h2>
+            <div class="column" id="start-column">
+                <h3>Start</h3>
+                <div class="card-container" data-type="start"></div>
+                <button onclick="addCard('start')">Ajouter une carte</button>
+            </div>
+            <div class="column" id="stop-column">
+                <h3>Stop</h3>
+                <div class="card-container" data-type="stop"></div>
+                <button onclick="addCard('stop')">Ajouter une carte</button>
+            </div>
+            <div class="column" id="continue-column">
+                <h3>Continue</h3>
+                <div class="card-container" data-type="continue"></div>
+                <button onclick="addCard('continue')">Ajouter une carte</button>
+            </div>
+        </section>
+        <button id="export-button">Exporter en Markdown/PDF</button>
+    </main>
+    <footer>
+        <p>&copy; 2023 M'Fabdel-Aziz (Abdel-Aziz) DIANÉ</p>
+    </footer>
+</body>
+</html>

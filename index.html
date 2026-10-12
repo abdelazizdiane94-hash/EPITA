@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio de M'Fabdel-Aziz (Abdel-Aziz) DIANÉ</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <script src="assets/js/main.js" defer></script>
+</head>
+<body>
+    <header>
+        <section class="hero">
+            <h1>M'Fabdel-Aziz (Abdel-Aziz) DIANÉ</h1>
+            <h2>Étudiant en 2ème année de BTS SIO option SLAM (Lycée Parc de Vilgénis, Massy, 2025-2027) | Candidat au Cycle Ingénieur EPITA en Apprentissage — Majeure DWNA (Septembre 2027).</h2>
+            <p>Coordonnées : 7 rue Louis Aragon, 94310 Orly | 07 67 46 83 18 | abdelaziz.diane94@gmail.com | <a href="https://github.com/abdelazizdiane94-hash/EPITA">Lien GitHub</a>.</p>
+            <div class="action-buttons">
+                <button onclick="scrollToProjects()">Explorer les 3 Projets</button>
+                <button onclick="downloadCV()">Télécharger mon CV</button>
+                <button onclick="readMotivationLetter()">Lire ma Lettre de Motivation</button>
+            </div>
+        </section>
+    </header>
+
+    <main>
+        <section class="skills">
+            <h3>Compétences Techniques</h3>
+            <ul>
+                <li>Langages : PHP, Java, HTML5, CSS3, JavaScript (ES6+), Python.</li>
+                <li>Bases de données : Modélisation (MCD/MLD) et requêtage (SQL, MySQL, PostgreSQL).</li>
+                <li>Outils & Environnements : Visual Studio Code, AMPPS, Windows PowerShell, Git/GitHub.</li>
+                <li>Infrastructure : Installation et maintenance de postes clients et réseau.</li>
+            </ul>
+        </section>
+
+        <section class="projects" id="projects">
+            <h3>Vitrine des Projets Web</h3>
+            <div class="project-card" onclick="openModal('chronos-desk')">
+                <h4>ChronosDesk</h4>
+                <p>Application métier en architecture MVC gérant le suivi d'incidents (Helpdesk).</p>
+                <button onclick="viewSource('projects/chronos-desk')">Voir le Code Source sur GitHub</button>
+                <button onclick="launchDemo('chronos-desk')">Lancer la Démo Interactive</button>
+            </div>
+            <div class="project-card" onclick="openModal('stock-pulse')">
+                <h4>StockPulse</h4>
+                <p>Solution d'inventaire découplée reposant sur une API REST sécurisée par JWT.</p>
+                <button onclick="viewSource('projects/stock-pulse')">Voir le Code Source sur GitHub</button>
+                <button onclick="launchDemo('stock-pulse')">Lancer la Démo Interactive</button>
+            </div>
+            <div class="project-card" onclick="openModal('collab-board')">
+                <h4>CollabBoard</h4>
+                <p>Outil interactif de rétrospective Agile avec Drag & Drop.</p>
+                <button onclick="viewSource('projects/collab-board')">Voir le Code Source sur GitHub</button>
+                <button onclick="launchDemo('collab-board')">Lancer la Démo Interactive</button>
+            </div>
+        </section>
+
+        <section class="experience">
+            <h3>Parcours & Expériences</h3>
+            <ul>
+                <li>16 Nov 2026 - 18 Déc 2026 : Stage en développement informatique (5 semaines).</li>
+                <li>Juin 2026 - Juillet 2026 : Stagiaire Développement Web & Gestion chez Pangée ONG.</li>
+                <li>Nov 2024 - Déc 2024 : Stagiaire Informatique à la Mairie d'Orly.</li>
+                <li>Juin 2024 : Stagiaire Maintenance et Programmation chez D8.</li>
+                <li>2022 - 2025 : Bac Pro Systèmes Numériques option ARED.</li>
+            </ul>
+        </section>
+
+        <section class="soft-skills">
+            <h3>Profil & Soft Skills</h3>
+            <ul>
+                <li>Boxe anglaise (3 ans de pratique assidue).</li>
+                <li>Esprit analytique : Theorycrafting et optimisation statistique complexe.</li>
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 M'Fabdel-Aziz (Abdel-Aziz) DIANÉ. Tous droits réservés.</p>
+    </footer>
+</body>
+</html>
