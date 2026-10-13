@@ -95,19 +95,23 @@ document.addEventListener('DOMContentLoaded', () => {
             chartStatus.textContent = 'Graphique indisponible : Chart.js ne s’est pas chargé. La liste et les mouvements restent utilisables.';
             return;
         }
+        const theme = getComputedStyle(document.documentElement);
+        const muted = theme.getPropertyValue('--muted').trim();
+        const border = theme.getPropertyValue('--line').trim();
+        const colors = [theme.getPropertyValue('--blue').trim(), theme.getPropertyValue('--cyan').trim(), theme.getPropertyValue('--green').trim(), theme.getPropertyValue('--primary').trim()];
         chart = new Chart(chartElement, {
             type: 'bar',
             data: {
                 labels: inventory.map(product => product.name),
-                datasets: [{ label: 'Unités en stock', data: inventory.map(product => product.quantity), backgroundColor: ['#74a7ff', '#63d5c2', '#9a87ed', '#edbd72'], borderRadius: 4 }]
+                datasets: [{ label: 'Unités en stock', data: inventory.map(product => product.quantity), backgroundColor: colors, borderRadius: 4 }]
             },
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                plugins: { legend: { labels: { color: '#d9e4f2' } } },
+                plugins: { legend: { labels: { color: muted } } },
                 scales: {
-                    x: { ticks: { color: '#9aa8bb' }, grid: { color: 'rgba(154,168,187,.12)' } },
-                    y: { beginAtZero: true, ticks: { color: '#9aa8bb' }, grid: { color: 'rgba(154,168,187,.12)' } }
+                    x: { ticks: { color: muted }, grid: { color: border } },
+                    y: { beginAtZero: true, ticks: { color: muted }, grid: { color: border } }
                 }
             }
         });
